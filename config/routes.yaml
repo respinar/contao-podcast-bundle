@@ -1,0 +1,4 @@
+# config/routes.yaml
+respinar_contao_podcast.controller:
+    resource: ../src/Controller
+    type: annotation
