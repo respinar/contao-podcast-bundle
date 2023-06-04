@@ -1,0 +1,6 @@
+<div class="episode_teaser">
+    <?php $this->insert('image', $this->arrData); ?>
+    <h3><a href="<?= $this->link ?>"><?= $this->title ?></a></h3>
+    <h4><?= $this->subtitle ?></h4>
+    <p><?= $this->teaser ?></p>
+</div>

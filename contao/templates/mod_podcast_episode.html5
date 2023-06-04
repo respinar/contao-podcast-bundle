@@ -1,0 +1,9 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<div class="podcast_episode">
+    <?= $this->episode ?>
+</div>
+
+<?php $this->endblock(); ?>
