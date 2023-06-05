@@ -20,7 +20,7 @@ use Respinar\ContaoPodcastBundle\Model\PodcastModel;
 
 use Respinar\ContaoPodcastBundle;
 
-#[AsFrontendModule(category: "podcasts", template: "mod_podcast_list")]
+#[AsFrontendModule(category: "podcasts")]
 class PodcastListController extends AbstractFrontendModuleController
 {
     public const TYPE = 'podcast_list';

@@ -16,7 +16,7 @@ use Respinar\ContaoPodcastBundle\Controller\Podcast;
 use Respinar\ContaoPodcastBundle\Model\PodcastEpisodeModel;
 use Respinar\ContaoPodcastBundle\Model\PodcastModel;
 
-#[AsContentElement(category: "podcasts", template: "ce_podcast_episode")]
+#[AsContentElement(category: "podcasts")]
 class PodcastEpisodeController extends AbstractContentElementController
 {
 
