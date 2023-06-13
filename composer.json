@@ -1,12 +1,7 @@
 {
     "name": "respinar/contao-podcast",
     "description": "Contao Podcast Bundle",
-    "keywords": [
-        "contao",
-        "bundle",
-        "tag 3",
-        "tag 4"
-    ],
+    "keywords": ["contao", "bundle", "podcast"],
     "type": "contao-bundle",
     "license": "MIT",
     "authors": [
@@ -46,6 +41,5 @@
     "scripts": {
         "cs-fixer": "@php tools/ecs/vendor/bin/ecs check config/ contao/ src/ templates/ tests/ --config tools/ecs/config.php --fix --ansi",
         "unit-tests": "@php tools/phpunit/vendor/bin/phpunit -c tools/phpunit/phpunit.xml.dist"
-    },
-    "version": "0.1.0"
+    }
 }
