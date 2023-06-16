@@ -15,39 +15,34 @@ declare(strict_types=1);
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_podcast']['first_legend'] = "Basis Einstellungen";
-$GLOBALS['TL_LANG']['tl_podcast']['second_legend'] = "Erweiterte Einstellungen";
+$GLOBALS['TL_LANG']['tl_podcast_channel']['title_legend'] = "Basis Einstellungen";
+$GLOBALS['TL_LANG']['tl_podcast_channel']['second_legend'] = "Erweiterte Einstellungen";
 
 /**
 * Global operations
 */
-$GLOBALS['TL_LANG']['tl_podcast']['new'] = ["New Channel", "Ein neues Element anlegen"];
+$GLOBALS['TL_LANG']['tl_podcast_channel']['new'] = ["New Channel", "Ein neues Element anlegen"];
 
 /**
  * Operations
  */
-$GLOBALS['TL_LANG']['tl_podcast']['edit'] = "Datensatz mit ID: %s bearbeiten";
-$GLOBALS['TL_LANG']['tl_podcast']['copy'] = "Datensatz mit ID: %s kopieren";
-$GLOBALS['TL_LANG']['tl_podcast']['delete'] = "Datensatz mit ID: %s löschen";
-$GLOBALS['TL_LANG']['tl_podcast']['show'] = "Datensatz mit ID: %s ansehen";
+$GLOBALS['TL_LANG']['tl_podcast_channel']['edit'] = "Datensatz mit ID: %s bearbeiten";
+$GLOBALS['TL_LANG']['tl_podcast_channel']['copy'] = "Datensatz mit ID: %s kopieren";
+$GLOBALS['TL_LANG']['tl_podcast_channel']['delete'] = "Datensatz mit ID: %s löschen";
+$GLOBALS['TL_LANG']['tl_podcast_channel']['show'] = "Datensatz mit ID: %s ansehen";
 
 /**
  * Fields
  */
-$GLOBALS['TL_LANG']['tl_podcast']['title'] = ["Titel", "Geben Sie den Titel ein"];
-$GLOBALS['TL_LANG']['tl_podcast']['selectField'] = ["Select Feld", "Wählen Sie aus."];
-$GLOBALS['TL_LANG']['tl_podcast']['checkboxField'] = ["Chosen Feld", "Wählen Sie aus."];
-$GLOBALS['TL_LANG']['tl_podcast']['multitextField'] = ["Multitext Feld", "Geben Sie die Werte ein"];
-$GLOBALS['TL_LANG']['tl_podcast']['addSubpalette'] = ["Erweiterte Einstellungen aktivieren", "Hier können Sie die erweiterten Einstellungen aktivieren."];
-$GLOBALS['TL_LANG']['tl_podcast']['textareaField'] = ["Textarea", "Geben Sie einen Text ein"];
+$GLOBALS['TL_LANG']['tl_podcast_channel']['title'] = ["Channel Title", "Geben Sie den Titel ein"];
 
 /**
  * References
  */
-$GLOBALS['TL_LANG']['tl_podcast']['firstoption'] = "Erste Option";
-$GLOBALS['TL_LANG']['tl_podcast']['secondoption'] = "Zweite Option";
+//$GLOBALS['TL_LANG']['tl_podcast_channel']['firstoption'] = "Erste Option";
+
 
 /**
  * Buttons
  */
-$GLOBALS['TL_LANG']['tl_podcast']['customButton'] = "Custom Routine starten";
+//$GLOBALS['TL_LANG']['tl_podcast_channel']['customButton'] = "Custom Routine starten";
