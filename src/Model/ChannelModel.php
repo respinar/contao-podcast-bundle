@@ -16,7 +16,7 @@ namespace Respinar\PodcastBundle\Model;
 
 use Contao\Model;
 
-class PodcastModel extends Model
+class ChannelModel extends Model
 {
-    protected static $strTable = 'tl_podcast';
+    protected static $strTable = 'tl_podcast_channel';
 }

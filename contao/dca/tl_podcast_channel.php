@@ -18,9 +18,9 @@ use Contao\DC_Table;
 use Contao\Input;
 
 /**
- * Table tl_podcast
+ * Table tl_podcast_channel
  */
-$GLOBALS['TL_DCA']['tl_podcast'] = array(
+$GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
     'config'      => array(
         'dataContainer'    => DC_Table::class,
         'c_table'          => array('tl_podcast_episode'),
@@ -144,7 +144,7 @@ $GLOBALS['TL_DCA']['tl_podcast'] = array(
 			'inputType'               => 'select',
 			'options'                 => array('notify_admin', 'notify_author', 'notify_both'),
 			'eval'                    => array('tl_class'=>'w50'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_podcast'],
+			'reference'               => &$GLOBALS['TL_LANG']['tl_podcast_channel'],
 			'sql'                     => "varchar(16) NOT NULL default 'notify_admin'"
 		),
 		'sortOrder' => array

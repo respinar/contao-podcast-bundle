@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Respinar\PodcastBundle\Controller\Podcast;
 
 use Respinar\PodcastBundle\Model\EpisodeModel;
-use Respinar\PodcastBundle\Model\PodcastModel;
+use Respinar\PodcastBundle\Model\ChannelModel;
 
 #[AsContentElement(category: "podcasts")]
 class PodcastEpisodeController extends AbstractContentElementController
@@ -26,19 +26,20 @@ class PodcastEpisodeController extends AbstractContentElementController
 
     protected function getResponse(Template $template, ContentModel $model, Request $request): Response
     {
+        $page = $this->getPageModel();
 
         if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
 		{
-			return $template->getResponse();
+			//return $template->getResponse();
 		}
 
         $objEpisode = EpisodeModel::findOneByID($model->podcast_episode);
 
-        $objPodcast = PodcastModel::findByIdOrAlias($objEpisode->pid);
+        $objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
 
         $model->imgSize = $model->size;
 
-        $template->episode = Podcast::parseEpisode($objEpisode, $objPodcast, $model);
+        $template->episode = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $page);
 
         return $template->getResponse();
     }

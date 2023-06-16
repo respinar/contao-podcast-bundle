@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Respinar\PodcastBundle\Controller\Podcast;
 
 use Respinar\PodcastBundle\Model\EpisodeModel;
-use Respinar\PodcastBundle\Model\PodcastModel;
+use Respinar\PodcastBundle\Model\ChannelModel;
 
 use Respinar\ContaoPodcastBundle;
 
@@ -27,12 +27,13 @@ class PodcastListController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
+        $page = $this->getPageModel();
 
-        $objPodcast = PodcastModel::findOneBy('id', StringUtil::deserialize($model->podcast)[0]);
+        $objPodcast = ChannelModel::findOneBy('id', StringUtil::deserialize($model->podcast)[0]);
 
         $objEpisodes = EpisodeModel::findBy('pid', $objPodcast->id);
 
-        $template->arrEpisodes = Podcast::parseEpisodes($objEpisodes, $objPodcast, $model);
+        $template->arrEpisodes = Podcast::parseEpisodes($objEpisodes, $objPodcast, $model, $page);
 
         return $template->getResponse();
     }

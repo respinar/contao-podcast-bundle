@@ -20,15 +20,15 @@ use Contao\BackendUser;
 use Contao\Config;
 use Contao\System;
 
-use Respinar\PodcastBundle\Model\PodcastModel;
+use Respinar\PodcastBundle\Model\ChannelModel;
 
 /**
- * Table tl_podcast
+ * Table tl_podcast_episode
  */
 $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
     'config'      => array(
         'dataContainer'    => DC_Table::class,
-        'ptable'           => 'tl_podcast',
+        'ptable'           => 'tl_podcast_channel',
         'enableVersioning' => true,
         'switchToEdit'     => true,
         'markAsCopy'       => 'headline',
@@ -106,7 +106,7 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
         ),
         'pid' => array
 		(
-			'foreignKey'              => 'tl_podcast.title',
+			'foreignKey'              => 'tl_podcast_channel.title',
 			'sql'                     => "int(10) unsigned NOT NULL default 0",
 			'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
 		),
@@ -172,9 +172,9 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			'sql'                     => "int(10) unsigned NOT NULL default 0"
 		),
         'episode' => array
-		(			
+		(
 			'exclude'                 => true,
-			'sorting'                 => true,			
+			'sorting'                 => true,
 			'inputType'               => 'text',
 			'eval'                    => array('rgxp'=>'number', 'mandatory'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50 wizard'),
 			'sql'                     => "int(10) unsigned NULL"
@@ -217,7 +217,7 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			'inputType'               => 'fileTree',
 			'eval'                    => array('fieldType'=>'radio', 'filesOnly'=>true, 'extensions'=>'%contao.image.valid_extensions%', 'mandatory'=>true),
 			'sql'                     => "binary(16) NULL"
-		),		
+		),
 		'podcastSRC' => array
 		(
 			'exclude'                 => true,
@@ -264,7 +264,7 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			'eval'                    => array('rgxp'=>'datim', 'datepicker'=>true, 'tl_class'=>'w50 wizard'),
 			'sql'                     => "varchar(10) NOT NULL default ''"
 		)
-        
+
     )
 );
 
@@ -304,7 +304,7 @@ class tl_podcast_episode extends Backend
 		// Generate alias if there is none
 		if (!$varValue)
 		{
-			$varValue = System::getContainer()->get('contao.slug')->generate($dc->activeRecord->title, PodcastModel::findByPk($dc->activeRecord->pid)->jumpTo, $aliasExists);
+			$varValue = System::getContainer()->get('contao.slug')->generate($dc->activeRecord->title, ChannelModel::findByPk($dc->activeRecord->pid)->jumpTo, $aliasExists);
 		}
 		elseif (preg_match('/^[1-9]\d*$/', $varValue))
 		{

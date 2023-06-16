@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Respinar\PodcastBundle\Controller\Podcast;
 
 use Respinar\PodcastBundle\Model\EpisodeModel;
-use Respinar\PodcastBundle\Model\PodcastModel;
+use Respinar\PodcastBundle\Model\ChannelModel;
 
 use Respinar\ContaoPodcastBundle;
 
@@ -26,6 +26,7 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
+        $page = $this->getPageModel();
 
         // Set the item from the auto_item parameter
 		if (!isset($_GET['items']) && $GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
@@ -35,9 +36,9 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
 
         $objEpisode = EpisodeModel::findOneByAlias(Input::get('items'));
 
-        $objPodcast = PodcastModel::findByIdOrAlias($objEpisode->pid);
+        $objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
 
-        $template->episode = Podcast::parseEpisode($objEpisode, $objPodcast, $model);
+        $template->episode = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $page);
 
         return $template->getResponse();
     }

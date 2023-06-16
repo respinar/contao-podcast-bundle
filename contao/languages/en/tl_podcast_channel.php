@@ -21,7 +21,7 @@ $GLOBALS['TL_LANG']['tl_podcast']['second_legend'] = "Erweiterte Einstellungen";
 /**
 * Global operations
 */
-$GLOBALS['TL_LANG']['tl_podcast']['new'] = ["Neu", "Ein neues Element anlegen"];
+$GLOBALS['TL_LANG']['tl_podcast']['new'] = ["New Channel", "Ein neues Element anlegen"];
 
 /**
  * Operations

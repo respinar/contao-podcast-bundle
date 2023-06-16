@@ -11,7 +11,7 @@ use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 use Contao\PageModel;
 use Contao\Database;
 use Contao\CoreBundle\Framework\ContaoFramework;
-use Respinar\PodcastBundle\Model\PodcastModel;
+use Respinar\PodcastBundle\Model\ChannelModel;
 use Respinar\PodcastBundle\Model\EpisodeModel;
 
 /**
@@ -37,7 +37,7 @@ class SitemapListener
         $time = time();
 
 		// Get all catalog categories
-		$objPodcasts = $this->framework->getAdapter(PodcastModel::class)->findByProtected('');
+		$objPodcasts = $this->framework->getAdapter(ChannelModel::class)->findByProtected('');
 		//ProductCatalogModel::findByProtected('');
 
 		if (null === $objPodcasts) {
