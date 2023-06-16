@@ -10,8 +10,8 @@
  * @link https://github.com/respinar/contao-podcast-bundle
  */
 
-use Respinar\ContaoPodcastBundle\Model\PodcastModel;
-use Respinar\ContaoPodcastBundle\Model\PodcastEpisodeModel;
+use Respinar\PodcastBundle\Model\PodcastModel;
+use Respinar\PodcastBundle\Model\EpisodeModel;
 
 /**
  * Backend modules
@@ -24,4 +24,4 @@ $GLOBALS['BE_MOD']['content']['podcast_chanel'] = array(
  * Models
  */
 $GLOBALS['TL_MODELS']['tl_podcast'] = PodcastModel::class;
-$GLOBALS['TL_MODELS']['tl_podcast_episode'] = PodcastEpisodeModel::class;
+$GLOBALS['TL_MODELS']['tl_podcast_episode'] = EpisodeModel::class;

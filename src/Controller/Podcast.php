@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Respinar\ContaoPodcastBundle\Controller;
+namespace Respinar\PodcastBundle\Controller;
 
 use Contao\System;
 use Contao\FrontendTemplate;
@@ -28,7 +28,7 @@ class Podcast {
 
 		/** @var PageModel $objPage */
 		global $objPage;
-        
+
         $objTemplate = new FrontendTemplate($model->podcast_template);
 
 		$objTemplate->setData($objEpisode->row());
@@ -55,7 +55,7 @@ class Podcast {
 				->createFigureBuilder()
 				->setSize($imgSize)
 				->from($objEpisode->coverSRC)
-                ->buildIfResourceExists();	
+                ->buildIfResourceExists();
 		}
 
         if (null !== $figure)
@@ -101,7 +101,7 @@ class Podcast {
 
 
     static public function parseEpisodes ($objEpisodes, $objPodcast, $model, $blnAddArchive=false) {
-        
+
         $arrEpisodes = array();
 
         foreach($objEpisodes as $objEpisode){

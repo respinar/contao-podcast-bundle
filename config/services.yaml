@@ -9,7 +9,7 @@ services:
         bind:
             #$projectDir: '%kernel.project_dir%'
 
-    Respinar\ContaoPodcastBundle\:
+    Respinar\PodcastBundle\:
         resource: ../src/
         exclude: ../src/{DependencyInjection,Model,Session}
 

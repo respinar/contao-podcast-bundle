@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/respinar/contao-podcast-bundle
  */
 
-namespace Respinar\ContaoPodcastBundle\DependencyInjection;
+namespace Respinar\PodcastBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

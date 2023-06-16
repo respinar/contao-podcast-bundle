@@ -12,12 +12,12 @@ declare(strict_types=1);
  * @link https://github.com/respinar/contao-podcast-bundle
  */
 
-namespace Respinar\ContaoPodcastBundle\Model;
+namespace Respinar\PodcastBundle\Model;
 
 use Contao\Date;
 use Contao\Model;
 
-class PodcastEpisodeModel extends Model
+class EpisodeModel extends Model
 {
     protected static $strTable = 'tl_podcast_episode';
 

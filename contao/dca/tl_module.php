@@ -14,13 +14,13 @@ declare(strict_types=1);
 
 use Contao\Controller;
 
-use Respinar\ContaoPodcastBundle\Controller\FrontendModule\PodcastListController;
-use Respinar\ContaoPodcastBundle\Controller\FrontendModule\PodcastEpisodeController;
+use Respinar\PodcastBundle\Controller\FrontendModule\PodcastListController;
+use Respinar\PodcastBundle\Controller\FrontendModule\PodcastEpisodeController;
 
 /**
  * Frontend modules
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastListController::TYPE] = '    
+$GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastListController::TYPE] = '
     {title_legend},name,headline,type;
     {config_legend},podcast,numberOfItems,podcast_featured,podcast_order,skipFirst,perPage;
     {template_legend:hide},podcast_metaFields,podcast_template,customTpl;

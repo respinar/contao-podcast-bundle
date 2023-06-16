@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/respinar/contao-podcast-bundle
  */
 
-use Respinar\ContaoPodcastBundle\Controller\ContentElement\PodcastEpisodeController;
+use Respinar\PodcastBundle\Controller\ContentElement\PodcastEpisodeController;
 
 /**
  * Content element
