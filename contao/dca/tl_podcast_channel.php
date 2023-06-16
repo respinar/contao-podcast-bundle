@@ -16,6 +16,8 @@ use Contao\Backend;
 use Contao\DataContainer;
 use Contao\DC_Table;
 use Contao\Input;
+use Contao\BackendUser;
+use Contao\CoreBundle\Util\LocaleUtil;
 
 /**
  * Table tl_podcast_channel
@@ -80,15 +82,15 @@ $GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
     // Palettes
     'palettes' => array
 	(
-		'__selector__'                => array('protected', 'allowComments'),
-		'default'                     => '{title_legend},title,jumpTo;{protected_legend:hide},protected;{comments_legend:hide},allowComments'
+		'__selector__'                => array('protected'),
+		'default'                     => '{title_legend},title,owner,author;{detail_legend},coverSRC,link,language,description;{config_legend},jumpTo;{protected_legend:hide},protected;'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
 		'protected'                   => 'groups',
-		'allowComments'               => 'notify,sortOrder,perPage,moderate,bbcode,requireLogin,disableCaptcha'
+		//'allowComments'               => 'notify,sortOrder,perPage,moderate,bbcode,requireLogin,disableCaptcha'
 	),
     'fields'      => array(
         'id'             => array(
@@ -104,6 +106,78 @@ $GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
 			'eval'      => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
 			'sql'       => "varchar(255) NOT NULL default ''"
         ),
+		'owner' => array
+		(
+			'default'                 => BackendUser::getInstance()->id,
+			'exclude'                 => true,
+			'search'                  => true,
+			'filter'                  => true,
+			'sorting'                 => true,
+			'flag'                    => DataContainer::SORT_ASC,
+			'inputType'               => 'select',
+			'foreignKey'              => 'tl_user.name',
+			'eval'                    => array('doNotCopy'=>true, 'chosen'=>true, 'mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50 clr'),
+			'sql'                     => "int(10) unsigned NOT NULL default 0",
+			'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
+		),
+		'author' => array
+		(
+			'default'                 => BackendUser::getInstance()->id,
+			'exclude'                 => true,
+			'search'                  => true,
+			'filter'                  => true,
+			'sorting'                 => true,
+			'flag'                    => DataContainer::SORT_ASC,
+			'inputType'               => 'select',
+			'foreignKey'              => 'tl_user.name',
+			'eval'                    => array('doNotCopy'=>true, 'chosen'=>true, 'mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "int(10) unsigned NOT NULL default 0",
+			'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
+		),
+		'language' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'nospace'=>true, 'decodeEntities'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''",
+			'save_callback'           => array
+			(
+				static function ($value)
+				{
+					// Make sure there is at least a basic language
+					if (!preg_match('/^[a-z]{2,}/i', $value))
+					{
+						throw new RuntimeException($GLOBALS['TL_LANG']['ERR']['language']);
+					}
+
+					return LocaleUtil::canonicalize($value);
+				}
+			)
+		),
+		'description' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'textarea',
+			'eval'                    => array('style'=>'height:60px', 'decodeEntities'=>true, 'tl_class'=>'clr'),
+			'sql'                     => "text NULL"
+		),
+		'coverSRC' => array
+		(
+			'exclude'                 => true,
+			'inputType'               => 'fileTree',
+			'eval'                    => array('fieldType'=>'radio', 'filesOnly'=>true, 'extensions'=>'%contao.image.valid_extensions%', 'mandatory'=>true),
+			'sql'                     => "binary(16) NULL"
+		),
+		'link' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>2048, 'dcaPicker'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(2048) NOT NULL default ''"
+		),
         'jumpTo' => array
 		(
 			'exclude'                 => true,
