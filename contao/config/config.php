@@ -17,7 +17,7 @@ use Respinar\PodcastBundle\Model\EpisodeModel;
  * Backend modules
  */
 $GLOBALS['BE_MOD']['content']['podcasts'] = array(
-    'tables' => array('tl_podcast_channel','tl_podcast_episode')
+    'tables' => array('tl_podcast_channel', 'tl_podcast_feed', 'tl_podcast_episode')
 );
 
 /**

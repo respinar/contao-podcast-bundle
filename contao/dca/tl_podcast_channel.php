@@ -15,7 +15,7 @@ declare(strict_types=1);
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\DC_Table;
-use Contao\Input;
+use Contao\StringUtil;
 use Contao\BackendUser;
 use Contao\CoreBundle\Util\LocaleUtil;
 
@@ -47,6 +47,13 @@ $GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
             'format' => '%s',
         ),
         'global_operations' => array(
+			'feeds' => array
+			(
+				'href'                => 'table=tl_podcast_feed',
+				'class'               => 'header_rss',
+				'attributes'          => 'onclick="Backend.getScrollOffset()"',
+				'button_callback'     => array('tl_podcast_channel', 'manageFeeds')
+			),
             'all' => array(
                 'href'       => 'act=select',
                 'class'      => 'header_edit_all',
@@ -267,3 +274,24 @@ $GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
 		)
     )
 );
+
+/**
+ * Provide miscellaneous methods that are used by the data configuration array.
+ */
+class tl_podcast_channel extends Backend
+{
+	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import(BackendUser::class, 'User');
+	}
+
+	public function manageFeeds($href, $label, $title, $class, $attributes)
+	{
+		return '<a href="' . $this->addToUrl($href) . '" class="' . $class . '" title="' . StringUtil::specialchars($title) . '"' . $attributes . '>' . $label . '</a> ';
+	}
+
+}
