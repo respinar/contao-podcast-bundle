@@ -17,7 +17,7 @@ use Respinar\PodcastBundle\Controller\FrontendModule\PodcastListController;
 /**
  * Backend modules
  */
-$GLOBALS['TL_LANG']['MOD']['podcast_chanel'] = ['Podcasts', 'Manage Podcasts'];
+$GLOBALS['TL_LANG']['MOD']['podcasts'] = ['Podcasts', 'Manage Podcasts'];
 
 /**
  * Frontend modules
