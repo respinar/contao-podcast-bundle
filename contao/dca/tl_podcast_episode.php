@@ -42,10 +42,11 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
     ),
     'list'        => array(
         'sorting'           => array(
-            'mode'        => DataContainer::MODE_SORTABLE,
+            'mode'        => DataContainer::MODE_PARENT,
             'fields'      => array('date'),
             'flag'        => DataContainer::SORT_INITIAL_LETTER_ASC,
-            'headerFields'=> array('title', 'jumpTo', 'tstamp', 'protected', 'allowComments'),
+            'headerFields'=> array('title', 'jumpTo', 'author', 'feed', 'feedAlias'),
+
             'panelLayout' => 'filter;sort,search,limit'
         ),
         'label'             => array(
@@ -73,6 +74,12 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
                 'icon'       => 'delete.svg',
                 'attributes' => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"'
             ),
+			'toggle' => array
+			(
+				'href'                => 'act=toggle&amp;field=published',
+				'icon'                => 'visible.svg',
+				'showInHeader'        => true
+			),
             'show'   => array(
                 'href'       => 'act=show',
                 'icon'       => 'show.svg',
