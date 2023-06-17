@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Respinar\ContaoPodcastBundle\Controller;
+namespace Respinar\PodcastBundle\Controller;
 
 use Contao\System;
 use Contao\FrontendTemplate;
@@ -24,11 +24,8 @@ class Podcast {
 	 */
 	private static $arrUrlCache = array();
 
-    static public function parseEpisode ($objEpisode, $objPodcast, $model, $blnAddArchive=false) {
+    static public function parseEpisode ($objEpisode, $objPodcast, $model, $page, $blnAddArchive=false) {
 
-		/** @var PageModel $objPage */
-		global $objPage;
-        
         $objTemplate = new FrontendTemplate($model->podcast_template);
 
 		$objTemplate->setData($objEpisode->row());
@@ -55,7 +52,7 @@ class Podcast {
 				->createFigureBuilder()
 				->setSize($imgSize)
 				->from($objEpisode->coverSRC)
-                ->buildIfResourceExists();	
+                ->buildIfResourceExists();
 		}
 
         if (null !== $figure)
@@ -70,7 +67,7 @@ class Podcast {
 			$objFileModel = FilesModel::findByUuid($objEpisode->podcastSRC);
 
 			// Convert the language to a locale (see #5678)
-			$strLanguage = LocaleUtil::formatAsLocale($objPage->language);
+			$strLanguage = LocaleUtil::formatAsLocale($page->language ?: 'en');
 			//$strCaption = $this->playerCaption;
 
 			/** @var FilesModel $objFileModel */
@@ -100,12 +97,12 @@ class Podcast {
     }
 
 
-    static public function parseEpisodes ($objEpisodes, $objPodcast, $model, $blnAddArchive=false) {
-        
+    static public function parseEpisodes ($objEpisodes, $objPodcast, $model, $page, $blnAddArchive=false) {
+
         $arrEpisodes = array();
 
         foreach($objEpisodes as $objEpisode){
-            $arrEpisodes[] = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $blnAddArchive);
+            $arrEpisodes[] = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $page, $blnAddArchive);
         }
         return $arrEpisodes;
     }

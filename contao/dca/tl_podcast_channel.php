@@ -15,12 +15,14 @@ declare(strict_types=1);
 use Contao\Backend;
 use Contao\DataContainer;
 use Contao\DC_Table;
-use Contao\Input;
+use Contao\StringUtil;
+use Contao\BackendUser;
+use Contao\CoreBundle\Util\LocaleUtil;
 
 /**
- * Table tl_podcast
+ * Table tl_podcast_channel
  */
-$GLOBALS['TL_DCA']['tl_podcast'] = array(
+$GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
     'config'      => array(
         'dataContainer'    => DC_Table::class,
         'c_table'          => array('tl_podcast_episode'),
@@ -80,15 +82,16 @@ $GLOBALS['TL_DCA']['tl_podcast'] = array(
     // Palettes
     'palettes' => array
 	(
-		'__selector__'                => array('protected', 'allowComments'),
-		'default'                     => '{title_legend},title,jumpTo;{protected_legend:hide},protected;{comments_legend:hide},allowComments'
+		'__selector__'                => array('feed', 'protected'),
+		'default'                     => '{title_legend},title;{config_legend},jumpTo;{author_legend},owner,author;{feed_legend},feed;{detail_legend},coverSRC,description;{protected_legend:hide},protected;'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
 		'protected'                   => 'groups',
-		'allowComments'               => 'notify,sortOrder,perPage,moderate,bbcode,requireLogin,disableCaptcha'
+		'feed'                        => 'feedAlias,format,language,feedBase,maxItems,imgSize',
+		//'allowComments'               => 'notify,sortOrder,perPage,moderate,bbcode,requireLogin,disableCaptcha'
 	),
     'fields'      => array(
         'id'             => array(
@@ -104,6 +107,126 @@ $GLOBALS['TL_DCA']['tl_podcast'] = array(
 			'eval'      => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
 			'sql'       => "varchar(255) NOT NULL default ''"
         ),
+		'feed' => array
+		(
+			'exclude'                 => true,
+			'toggle'                  => true,
+			'filter'                  => true,
+			'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
+			'inputType'               => 'checkbox',
+			'eval'                    => array('doNotCopy'=>true, 'submitOnChange'=>true, 'tl_class'=>'w50 m12'),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		'feedAlias' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true, 'rgxp'=>'alias', 'doNotCopy'=>true, 'unique'=>true, 'maxlength'=>255, 'tl_class'=>'w50 clr'),
+			// 'save_callback' => array
+			// (
+			// 	array('tl_podcast_episode', 'generateAlias')
+			// ),
+			'sql'                     => "varchar(255) BINARY NOT NULL default ''"
+		),
+		'feedBase' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('rgxp'=>'url', 'decodeEntities'=>true, 'maxlength'=>2048, 'dcaPicker'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(2048) NOT NULL default ''"
+		),
+		'format' => array
+		(
+			'exclude'                 => true,
+			'filter'                  => true,
+			'inputType'               => 'select',
+			'options'                 => array('rss'=>'RSS 2.0', 'atom'=>'Atom'),
+			'eval'                    => array('tl_class'=>'w50'),
+			'sql'                     => "varchar(32) NOT NULL default 'rss'"
+		),
+		'maxItems' => array
+		(
+			'exclude'                 => true,
+			'inputType'               => 'text',
+			'eval'                    => array('rgxp'=>'natural', 'tl_class'=>'w50'),
+			'sql'                     => "smallint(5) unsigned NOT NULL default 25"
+		),
+		'imgSize' => array
+		(
+			'exclude'                 => true,
+			'inputType'               => 'imageSize',
+			'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+			'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50'),
+			'options_callback'	      => array('contao.listener.image_size_options', '__invoke'),
+			'sql'                     => "varchar(255) NOT NULL default ''"
+		),
+		'owner' => array
+		(
+			'default'                 => BackendUser::getInstance()->id,
+			'exclude'                 => true,
+			'search'                  => true,
+			'filter'                  => true,
+			'sorting'                 => true,
+			'flag'                    => DataContainer::SORT_ASC,
+			'inputType'               => 'select',
+			'foreignKey'              => 'tl_user.name',
+			'eval'                    => array('doNotCopy'=>true, 'chosen'=>true, 'mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "int(10) unsigned NOT NULL default 0",
+			'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
+		),
+		'author' => array
+		(
+			'default'                 => BackendUser::getInstance()->id,
+			'exclude'                 => true,
+			'search'                  => true,
+			'filter'                  => true,
+			'sorting'                 => true,
+			'flag'                    => DataContainer::SORT_ASC,
+			'inputType'               => 'select',
+			'foreignKey'              => 'tl_user.name',
+			'eval'                    => array('doNotCopy'=>true, 'chosen'=>true, 'mandatory'=>true, 'includeBlankOption'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "int(10) unsigned NOT NULL default 0",
+			'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
+		),
+		'language' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>64, 'nospace'=>true, 'decodeEntities'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''",
+			'save_callback'           => array
+			(
+				static function ($value)
+				{
+					// Make sure there is at least a basic language
+					if (!preg_match('/^[a-z]{2,}/i', $value))
+					{
+						throw new RuntimeException($GLOBALS['TL_LANG']['ERR']['language']);
+					}
+
+					return LocaleUtil::canonicalize($value);
+				}
+			)
+		),
+		'description' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'textarea',
+			'eval'                    => array('style'=>'height:60px', 'decodeEntities'=>true, 'tl_class'=>'clr'),
+			'sql'                     => "text NULL"
+		),
+		'coverSRC' => array
+		(
+			'exclude'                 => true,
+			'inputType'               => 'fileTree',
+			'eval'                    => array('fieldType'=>'radio', 'filesOnly'=>true, 'extensions'=>'%contao.image.valid_extensions%', 'mandatory'=>true),
+			'sql'                     => "binary(16) NULL"
+		),
+
         'jumpTo' => array
 		(
 			'exclude'                 => true,
@@ -144,7 +267,7 @@ $GLOBALS['TL_DCA']['tl_podcast'] = array(
 			'inputType'               => 'select',
 			'options'                 => array('notify_admin', 'notify_author', 'notify_both'),
 			'eval'                    => array('tl_class'=>'w50'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_podcast'],
+			'reference'               => &$GLOBALS['TL_LANG']['tl_podcast_channel'],
 			'sql'                     => "varchar(16) NOT NULL default 'notify_admin'"
 		),
 		'sortOrder' => array
@@ -193,3 +316,24 @@ $GLOBALS['TL_DCA']['tl_podcast'] = array(
 		)
     )
 );
+
+/**
+ * Provide miscellaneous methods that are used by the data configuration array.
+ */
+class tl_podcast_channel extends Backend
+{
+	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->import(BackendUser::class, 'User');
+	}
+
+	public function manageFeeds($href, $label, $title, $class, $attributes)
+	{
+		return '<a href="' . $this->addToUrl($href) . '" class="' . $class . '" title="' . StringUtil::specialchars($title) . '"' . $attributes . '>' . $label . '</a> ';
+	}
+
+}

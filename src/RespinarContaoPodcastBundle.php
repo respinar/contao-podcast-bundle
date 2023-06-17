@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/respinar/contao-podcast-bundle
  */
 
-namespace Respinar\ContaoPodcastBundle;
+namespace Respinar\PodcastBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

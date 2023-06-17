@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/respinar/contao-podcast-bundle
  */
 
-namespace Respinar\ContaoPodcastBundle\ContaoManager;
+namespace Respinar\PodcastBundle\ContaoManager;
 
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
@@ -27,7 +27,7 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
     public function getBundles(ParserInterface $parser): array
     {
         return [
-            BundleConfig::create('Respinar\ContaoPodcastBundle\RespinarContaoPodcastBundle')
+            BundleConfig::create('Respinar\PodcastBundle\RespinarContaoPodcastBundle')
                 ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle']),
         ];
     }
@@ -39,9 +39,5 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
      */
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
-        return $resolver
-            ->resolve(__DIR__.'/../../config/routes.yaml')
-            ->load(__DIR__.'/../../config/routes.yaml')
-    ;
     }
 }
