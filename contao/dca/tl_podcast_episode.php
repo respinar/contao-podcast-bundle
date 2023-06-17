@@ -80,6 +80,11 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 				'icon'                => 'visible.svg',
 				'showInHeader'        => true
 			),
+			'feature' => array
+			(
+				'href'                => 'act=toggle&amp;field=featured',
+				'icon'                => 'featured.svg',
+			),
             'show'   => array(
                 'href'       => 'act=show',
                 'icon'       => 'show.svg',
@@ -93,12 +98,12 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 	(
 		//'__selector__'      => array('addImage'),
 		'default'           => '
-			{title_legend},title,featured,alias,author;
-			{date_legend},date,episode;
+			{title_legend},title,featured,alias,episode;
+			{date_legend},date,author;
 			{podcast_legend},podcastSRC;
 			{image_legend},coverSRC;{meta_legend},pageTitle,description;
 			{teaser_legend},subheadline,teaser;
-			{expert_legend:hide},cssClass,noComments;
+			{expert_legend:hide},cssClass;
 			{publish_legend},published,start,stop'
 	),
 
