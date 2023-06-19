@@ -18,7 +18,7 @@ use Contao\Config;
 use Contao\Environment;
 use Contao\UserModel;
 use Contao\FilesModel;
-use Contao\Date;
+use Contao\PageModel;
 use Contao\File;
 use Contao\Feed;
 use Contao\FeedItem;
@@ -36,10 +36,10 @@ use Respinar\PodcastBundle\Model\EpisodeModel;
 class PodcastFeed extends Frontend
 {
 	/**
-	 * Current events
+	 * URL cache array
 	 * @var array
 	 */
-	protected $arrEvents = array();
+	private static $arrUrlCache = array();
 
 	/**
 	 * Page cache array
@@ -54,30 +54,28 @@ class PodcastFeed extends Frontend
 	 */
 	public function generateFeed($intId)
 	{
-		$objPodcast = ChannelModel::findByPk($intId);
+		$objFeed = ChannelModel::findByPk($intId);
 
-		if ($objPodcast === null)
+		if ($objFeed === null)
 		{
 			return;
 		}
 
-		$objPodcast->feedName = $objPodcast->alias ?: 'podcast' . $objPodcast->id;
+		$objFeed->feedName = $objFeed->alias ?: 'podcast' . $objFeed->id;
 
 		// Delete XML file
 		if (Input::get('act') == 'delete')
 		{
-			$webDir = StringUtil::stripRootDir(System::getContainer()->getParameter('contao.web_dir'));
-
 			$this->import(Files::class, 'Files');
-			$this->Files->delete($webDir . '/share/' . $objPodcast->feedName . '.xml');
+			$this->Files->delete($objFeed->feedName . '.xml');
 		}
 
 		// Update XML file
 		else
 		{
-			$this->generateFiles($objPodcast->row());
+			$this->generateFiles($objFeed->row());
 
-			System::getContainer()->get('monolog.logger.contao.cron')->info('Generated calendar feed "' . $objPodcast->feedName . '.xml"');
+			System::getContainer()->get('monolog.logger.contao.cron')->info('Generated podcast feed "' . $objFeed->feedName . '.xml"');
 		}
 	}
 
@@ -89,45 +87,22 @@ class PodcastFeed extends Frontend
 		$this->import(Automator::class, 'Automator');
 		$this->Automator->purgeXmlFiles();
 
-		$objPodcast = ChannelModel::findAll();
+		$objFeed = ChannelModel::findAll();
 
-		if ($objPodcast !== null)
+		if ($objFeed !== null)
 		{
-			while ($objPodcast->next())
+			while ($objFeed->next())
 			{
-				$objPodcast->feedName = $objPodcast->alias ?: 'podcast' . $objPodcast->id;
-				$this->generateFiles($objPodcast->row());
+				$objFeed->feedName = $objFeed->alias ?: 'podcast' . $objFeed->id;
+				$this->generateFiles($objFeed->row());
 
-				System::getContainer()->get('monolog.logger.contao.cron')->info('Generated calendar feed "' . $objPodcast->feedName . '.xml"');
+				System::getContainer()->get('monolog.logger.contao.cron')->info('Generated podcast feed "' . $objFeed->feedName . '.xml"');
 			}
 		}
 	}
 
 	/**
-	 * Generate all feeds including a certain calendar
-	 *
-	 * @param integer $intId
-	 */
-	public function generateFeedsByCalendar($intId)
-	{
-		// $objFeed = CalendarFeedModel::findByCalendar($intId);
-
-		// if ($objFeed !== null)
-		// {
-		// 	while ($objFeed->next())
-		// 	{
-		// 		$objFeed->feedName = $objFeed->alias ?: 'calendar' . $objFeed->id;
-
-		// 		// Update the XML file
-		// 		$this->generateFiles($objFeed->row());
-
-		// 		System::getContainer()->get('monolog.logger.contao.cron')->info('Generated calendar feed "' . $objFeed->feedName . '.xml"');
-		// 	}
-		// }
-	}
-
-	/**
-	 * Generate an XML file and save it to the root directory
+	 * Generate an XML files and save them to the root directory
 	 *
 	 * @param array $arrFeed
 	 */
@@ -151,17 +126,31 @@ class PodcastFeed extends Frontend
 		$objFeed->language = $arrFeed['language'];
 		$objFeed->published = $arrFeed['tstamp'];
 
-		$arrUrls = array();
-		$this->arrEvents = array();
-		$time = time();
+		// Get the items
+		if ($arrFeed['maxItems'] > 0)
+		{
+			$objEpisodes = EpisodeModel::findPublishedByPids($arrPodcasts, null, $arrFeed['maxItems']);
+		}
+		else
+		{
+			$objEpisodes = EpisodeModel::findPublishedByPids($arrPodcasts);
+		}
 
-		// Get the upcoming events
-		$objEpisode = EpisodeModel::findByPids($arrPodcasts, $arrFeed['maxItems']);
+		$container = System::getContainer();
 
 		// Parse the items
-		if ($objEpisode !== null)
+		if ($objEpisodes !== null)
 		{
-			while ($objEpisode->next())
+			$arrUrls = array();
+
+			/** @var RequestStack $requestStack */
+			$requestStack = $container->get('request_stack');
+			$currentRequest = $requestStack->getCurrentRequest();
+
+			$time = time();
+			$origObjPage = $GLOBALS['objPage'] ?? null;
+
+			foreach ($objEpisodes as $objEpisode)
 			{
 				// Never add unpublished elements to the RSS feeds
 				if (!$objEpisode->published || ($objEpisode->start && $objEpisode->start > $time) || ($objEpisode->stop && $objEpisode->stop <= $time))
@@ -185,184 +174,101 @@ class PodcastFeed extends Frontend
 					continue;
 				}
 
+				// Override the global page object (#2946)
+				$GLOBALS['objPage'] = $objParent;
+
 				// Get the jumpTo URL
 				if (!isset($arrUrls[$jumpTo]))
 				{
-					$arrUrls[$jumpTo] = $objParent->getAbsoluteUrl(Config::get('useAutoItem') ? '/%s' : '/events/%s');
+					$arrUrls[$jumpTo] = $objParent->getAbsoluteUrl(Config::get('useAutoItem') ? '/%s' : '/items/%s');
 				}
 
 				$strUrl = $arrUrls[$jumpTo];
-				$this->addEvent($objEpisode, $objEpisode->startTime, $objEpisode->endTime, $strUrl);
 
-			}
-		}
+				$objItem = new FeedItem();
+				$objItem->title = $objEpisode->headline;
+				$objItem->link = $this->getLink($objEpisode, $strUrl);
+				$objItem->published = $objEpisode->date;
 
-		$count = 0;
-		ksort($this->arrEvents);
+				// Push a new request to the request stack (#3856)
+				$request = $this->createSubRequest($objItem->link, $currentRequest);
+				$request->attributes->set('_scope', 'frontend');
+				$requestStack->push($request);
 
-		$container = System::getContainer();
-
-		/** @var RequestStack $requestStack */
-		$requestStack = System::getContainer()->get('request_stack');
-		$currentRequest = $requestStack->getCurrentRequest();
-
-		$origObjPage = $GLOBALS['objPage'] ?? null;
-
-		// Add the feed items
-		foreach ($this->arrEvents as $days)
-		{
-			foreach ($days as $events)
-			{
-				foreach ($events as $event)
+				/** @var UserModel $objAuthor */
+				if (($objAuthor = $objEpisode->getRelated('author')) instanceof UserModel)
 				{
-					if ($arrFeed['maxItems'] > 0 && $count++ >= $arrFeed['maxItems'])
-					{
-						break 3;
-					}
-
-					// Override the global page object (#2946)
-					$GLOBALS['objPage'] = $this->getPageWithDetails(CalendarModel::findByPk($event['pid'])->jumpTo);
-
-					// Push a new request to the request stack (#3856)
-					$request = $this->createSubRequest($event['link'], $currentRequest);
-					$request->attributes->set('_scope', 'frontend');
-					$requestStack->push($request);
-
-					$objItem = new FeedItem();
-					$objItem->title = $event['title'];
-					$objItem->link = $event['link'];
-					$objItem->published = $event['tstamp'];
-					$objItem->begin = $event['startTime'];
-					$objItem->end = $event['endTime'];
-
-					if ($event['isRepeated'] ?? null)
-					{
-						$objItem->guid = $event['link'] . '#' . date('Y-m-d', $event['startTime']);
-					}
-
-					if (($objAuthor = UserModel::findById($event['author'])) !== null)
-					{
-						$objItem->author = $objAuthor->name;
-					}
-
-					// Prepare the description
-					if ($arrFeed['source'] == 'source_text')
-					{
-						$strDescription = '';
-						$objElement = ContentModel::findPublishedByPidAndTable($event['id'], 'tl_calendar_events');
-
-						if ($objElement !== null)
-						{
-							// Overwrite the request (see #7756)
-							$strRequest = Environment::get('request');
-							Environment::set('request', $objItem->link);
-
-							while ($objElement->next())
-							{
-								$strDescription .= $this->getContentElement($objElement->current());
-							}
-
-							Environment::set('request', $strRequest);
-						}
-					}
-					else
-					{
-						$strDescription = $event['teaser'] ?? '';
-					}
-
-					$strDescription = System::getContainer()->get('contao.insert_tag.parser')->replaceInline($strDescription);
-					$objItem->description = $this->convertRelativeUrls($strDescription, $strLink);
-
-					if (\is_array($event['media:content']))
-					{
-						foreach ($event['media:content'] as $enclosure)
-						{
-							$objItem->addEnclosure($enclosure, $strLink, 'media:content', $arrFeed['imgSize']);
-						}
-					}
-
-					if (\is_array($event['enclosure']))
-					{
-						foreach ($event['enclosure'] as $enclosure)
-						{
-							$objItem->addEnclosure($enclosure, $strLink);
-						}
-					}
-
-					$objFeed->addItem($objItem);
-
-					$requestStack->pop();
+					$objItem->author = $objAuthor->name;
 				}
-			}
-		}
 
-		$GLOBALS['objPage'] = $origObjPage;
+				// Prepare the description
+
+				$strDescription = $objEpisode->teaser ?? '';
+
+				$strDescription = $container->get('contao.insert_tag.parser')->replaceInline($strDescription);
+				$objItem->description = $this->convertRelativeUrls($strDescription, $strLink);
+
+				// Add the article image as enclosure
+				if ($objEpisode->coverSRC)
+				{
+					$objFile = FilesModel::findByUuid($objEpisode->coverSRC);
+
+					if ($objFile !== null)
+					{
+						$objItem->addEnclosure($objFile->path, $strLink, 'media:content', $arrFeed['imgSize']);
+					}
+				}
+
+				// Enclosures
+				if ($objEpisode->podcastSRC)
+				{
+					$arrEnclosure = StringUtil::deserialize($objEpisode->podcastSRC, true);
+
+					if (\is_array($arrEnclosure))
+					{
+						$objFile = FilesModel::findMultipleByUuids($arrEnclosure);
+
+						if ($objFile !== null)
+						{
+							while ($objFile->next())
+							{
+								$objItem->addEnclosure($objFile->path, $strLink);
+							}
+						}
+					}
+				}
+
+				$objFeed->addItem($objItem);
+
+				$requestStack->pop();
+			}
+
+			$GLOBALS['objPage'] = $origObjPage;
+		}
 
 		$webDir = StringUtil::stripRootDir($container->getParameter('contao.web_dir'));
 
 		// Create the file
-		File::putContent($webDir . '/share/' . $strFile . '.xml', System::getContainer()->get('contao.insert_tag.parser')->replaceInline($objFeed->$strType()));
+		File::putContent($webDir . '/share/' . $strFile . '.xml', $container->get('contao.insert_tag.parser')->replaceInline($objFeed->$strType()));
 	}
 
-
-
 	/**
-	 * Add an event to the array of active events
+	 * Return the link of a news article
 	 *
-	 * @param CalendarEventsModel $objEvent
-	 * @param integer             $intStart
-	 * @param integer             $intEnd
-	 * @param string              $strUrl
-	 * @param string              $strBase
-	 * @param boolean             $isRepeated
+	 * @param NewsModel $objItem
+	 * @param string    $strUrl
+	 * @param string    $strBase
 	 *
-	 * @deprecated Deprecated since Contao 4.9, to be made private in Contao 5.0
+	 * @return string
 	 */
-	protected function addEvent($objEvent, $intStart, $intEnd, $strUrl, $strBase='', $isRepeated=false)
+	protected function getLink($objItem, $strUrl, $strBase='')
 	{
-		if (static::class !== self::class)
-		{
-			trigger_deprecation('contao/calendar-bundle', '4.9', 'Calling "%s()" from an extended class has been deprecated, it will be made private in Contao 5.0.', __METHOD__);
-		}
 
-		if ($intEnd < time())
+		if (($objTarget = $objItem->getRelated('jumpTo')) instanceof PageModel)
 		{
-			return; // see #3917
+			/** @var PageModel $objTarget */
+			return $objTarget->getAbsoluteUrl();
 		}
-
-		$intKey = date('Ymd', $intStart);
-		//$span = self::calculateSpan($intStart, $intEnd);
-		$format = $objEvent->addTime ? 'datimFormat' : 'dateFormat';
-
-		/** @var PageModel $objPage */
-		global $objPage;
-
-		if ($objPage instanceof PageModel)
-		{
-			$date = $objPage->$format;
-			$dateFormat = $objPage->dateFormat;
-			$timeFormat = $objPage->timeFormat;
-		}
-		else
-		{
-			// Called in the back end (see #4026)
-			$date = Config::get($format);
-			$dateFormat = Config::get('dateFormat');
-			$timeFormat = Config::get('timeFormat');
-		}
-
-		// Add date
-		if ($span > 0)
-		{
-			$title = Date::parse($date, $intStart) . $GLOBALS['TL_LANG']['MSC']['cal_timeSeparator'] . Date::parse($date, $intEnd);
-		}
-		else
-		{
-			$title = Date::parse($dateFormat, $intStart) . ($objEvent->addTime ? ' (' . Date::parse($timeFormat, $intStart) . (($intStart < $intEnd) ? $GLOBALS['TL_LANG']['MSC']['cal_timeSeparator'] . Date::parse($timeFormat, $intEnd) : '') . ')' : '');
-		}
-
-		// Add title and link
-		$title .= ' ' . $objEvent->title;
 
 		// Backwards compatibility (see #8329)
 		if ($strBase && !preg_match('#^https?://#', $strUrl))
@@ -370,82 +276,8 @@ class PodcastFeed extends Frontend
 			$strUrl = $strBase . $strUrl;
 		}
 
-		$link = '';
-
-		switch ($objEvent->source)
-		{
-			case 'external':
-				$link = $objEvent->url;
-				break;
-
-			case 'internal':
-				if (($objTarget = $objEvent->getRelated('jumpTo')) instanceof PageModel)
-				{
-					/** @var PageModel $objTarget */
-					$link = $objTarget->getAbsoluteUrl();
-				}
-				break;
-
-			case 'article':
-				if (($objEpisode = ArticleModel::findByPk($objEvent->articleId)) instanceof ArticleModel && ($objPid = $objEpisode->getRelated('pid')) instanceof PageModel)
-				{
-					/** @var PageModel $objPid */
-					$link = StringUtil::ampersand($objPid->getAbsoluteUrl('/articles/' . ($objEpisode->alias ?: $objEpisode->id)));
-				}
-				break;
-
-			default:
-				$link = sprintf(preg_replace('/%(?!s)/', '%%', $strUrl), ($objEvent->alias ?: $objEvent->id));
-				break;
-		}
-
-		// Store the whole row (see #5085)
-		$arrEvent = $objEvent->row();
-
-		// Override link and title
-		$arrEvent['link'] = $link;
-		$arrEvent['title'] = $title;
-
-		// Set the current start and end date
-		$arrEvent['startDate'] = $intStart;
-		$arrEvent['endDate'] = $intEnd;
-		$arrEvent['isRepeated'] = $isRepeated;
-
-		// Reset the enclosures (see #5685)
-		$arrEvent['enclosure'] = array();
-		$arrEvent['media:content'] = array();
-
-		// Add the article image as enclosure
-		if ($objEvent->addImage)
-		{
-			$objFile = FilesModel::findByUuid($objEvent->singleSRC);
-
-			if ($objFile !== null)
-			{
-				$arrEvent['media:content'][] = $objFile->path;
-			}
-		}
-
-		// Enclosures
-		if ($objEvent->addEnclosure)
-		{
-			$arrEnclosure = StringUtil::deserialize($objEvent->enclosure, true);
-
-			if (\is_array($arrEnclosure))
-			{
-				$objFile = FilesModel::findMultipleByUuids($arrEnclosure);
-
-				if ($objFile !== null)
-				{
-					while ($objFile->next())
-					{
-						$arrEvent['enclosure'][] = $objFile->path;
-					}
-				}
-			}
-		}
-
-		$this->arrEvents[$intKey][$intStart][] = $arrEvent;
+		// Link to the default page
+		return sprintf(preg_replace('/%(?!s)/', '%%', $strUrl), ($objItem->alias ?: $objItem->id));
 	}
 
 	/**
@@ -456,13 +288,13 @@ class PodcastFeed extends Frontend
 	public function purgeOldFeeds()
 	{
 		$arrFeeds = array();
-		$objFeeds = CalendarFeedModel::findAll();
+		$objFeeds = ChannelModel::findAll();
 
 		if ($objFeeds !== null)
 		{
 			while ($objFeeds->next())
 			{
-				$arrFeeds[] = $objFeeds->alias ?: 'calendar' . $objFeeds->id;
+				$arrFeeds[] = $objFeeds->alias ?: 'podcast' . $objFeeds->id;
 			}
 		}
 
@@ -517,4 +349,4 @@ class PodcastFeed extends Frontend
 	}
 }
 
-class_alias(Calendar::class, 'Calendar');
+class_alias(PodcastFeed::class, 'PodcastFeed');
