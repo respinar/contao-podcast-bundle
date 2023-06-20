@@ -20,9 +20,6 @@ $GLOBALS['BE_MOD']['content']['podcasts'] = array(
     'tables' => array('tl_podcast_channel', 'tl_podcast_episode')
 );
 
-// Cron jobs
-$GLOBALS['TL_CRON']['daily']['generatePodcastFeeds'] = array(PodcastFeed::class, 'generateFeeds');
-
 /**
  * Models
  */
