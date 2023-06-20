@@ -100,8 +100,9 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 		'default'           => '
 			{title_legend},title,featured,alias,episode;
 			{date_legend},date,author;
-			{podcast_legend},podcastSRC;
-			{image_legend},coverSRC;{meta_legend},pageTitle,description;
+			{podcast_legend},podcastSRC,duration;
+			{image_legend},coverSRC;
+			{meta_legend},pageTitle,description;
 			{teaser_legend},subheadline,teaser;
 			{expert_legend:hide},cssClass;
 			{publish_legend},published,start,stop'
@@ -236,6 +237,14 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			'inputType'               => 'fileTree',
 			'eval'                    => array('multiple'=>false, 'fieldType'=>'radio', 'filesOnly'=>true, 'isDownloads'=>true, 'extensions'=>'mp3, m4a, ogg', 'mandatory'=>true),
 			'sql'                     => "binary(16) NULL"
+		),
+		'duration' => array
+		(
+			'exclude'                 => true,
+			'search'                  => true,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>10, 'rgxp' => 'custom', 'customRgxp' => '/([0-5]\d:)*[0-5]\d/', 'tl_class'=>'w50 clear'),
+			'sql'                     => "varchar(10) NOT NULL default ''"
 		),
 		'cssClass' => array
 		(

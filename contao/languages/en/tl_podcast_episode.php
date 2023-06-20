@@ -47,6 +47,7 @@ $GLOBALS['TL_LANG']['tl_podcast_episode']['featured'] = ["Feature episode", "Sho
 $GLOBALS['TL_LANG']['tl_podcast_episode']['date'] = ["Publish date", "Please enter the date according to the global date format."];
 $GLOBALS['TL_LANG']['tl_podcast_episode']['episode'] = ["Episode number", "Please enter the episode number."];
 $GLOBALS['TL_LANG']['tl_podcast_episode']['podcastSRC'] = ["Audio file", "Please select a file or folder from the files directory."];
+$GLOBALS['TL_LANG']['tl_podcast_episode']['duration'] = ["Duration", "Please enter duration in format mm:ss."];
 $GLOBALS['TL_LANG']['tl_podcast_episode']['coverSRC'] = ["Episode cover", "Please select a file or folder from the files directory."];
 $GLOBALS['TL_LANG']['tl_podcast_episode']['pageTitle'] = ["Meta title", "Here you can add a custom meta title to overwrite the default page title."];
 $GLOBALS['TL_LANG']['tl_podcast_episode']['description'] = ["Meta description", "Here you can add a custom meta description to overwrite the default page description."];
