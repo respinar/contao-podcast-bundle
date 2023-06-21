@@ -243,7 +243,7 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('maxlength'=>10, 'rgxp' => 'custom', 'customRgxp' => '/([0-5]\d:)*[0-5]\d/', 'tl_class'=>'w50 clear'),
+			'eval'                    => array('maxlength'=>10, 'rgxp' => 'custom', 'customRgxp' => '/([0-5]\d:){1,2}([0-5]\d)$/', 'tl_class'=>'w50 clear'),
 			'sql'                     => "varchar(10) NOT NULL default ''"
 		),
 		'cssClass' => array
