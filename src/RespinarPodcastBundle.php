@@ -15,7 +15,7 @@ namespace Respinar\PodcastBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RespinarContaoPodcastBundle extends Bundle
+class RespinarPodcastBundle extends Bundle
 {
     public function getPath(): string
     {
