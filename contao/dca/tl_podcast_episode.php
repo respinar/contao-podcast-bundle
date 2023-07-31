@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
 		),
         'tstamp'         => array(
-            'sql' => "int(10) unsigned NOT NULL default '0'"
+            'sql' => "int(10) unsigned NOT NULL default 0"
         ),
         'title'          => array(
             'exclude'   => true,
