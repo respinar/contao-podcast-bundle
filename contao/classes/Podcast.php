@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is part of Contao.
+ * This file is part of Contao Simple Podcast.
  *
- * (c) Leo Feyer
+ * (c) Hamid Peywasti 2023 <hamid@respinar.com>
  *
- * @license LGPL-3.0-or-later
+ * @license MIT
  */
 
 namespace Respinar\PodcastBundle;
