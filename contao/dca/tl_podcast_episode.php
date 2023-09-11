@@ -99,7 +99,8 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			{title_legend},title,featured,alias,episode;
 			{date_legend},date,author;
 			{podcast_legend},podcastSRC;
-			{image_legend},coverSRC;{meta_legend},pageTitle,description;
+			{image_legend},coverSRC;
+			{meta_legend},pageTitle,description;
 			{teaser_legend},subheadline,teaser;
 			{expert_legend:hide},cssClass;
 			{publish_legend},published,start,stop'
