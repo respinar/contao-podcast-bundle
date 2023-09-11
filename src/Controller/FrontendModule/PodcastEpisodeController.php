@@ -17,15 +17,15 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\ModuleModel;
 use Contao\Template;
 use Contao\Input;
+use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 
 use Respinar\PodcastBundle\Controller\Podcast;
 
 use Respinar\PodcastBundle\Model\EpisodeModel;
 use Respinar\PodcastBundle\Model\ChannelModel;
-
-use Respinar\ContaoPodcastBundle;
 
 #[AsFrontendModule(category: "podcasts")]
 class PodcastEpisodeController extends AbstractFrontendModuleController
@@ -47,6 +47,32 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
         $objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
 
         $template->episode = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $page);
+
+        // Page title and Description
+        $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
+
+		if ($responseContext && $responseContext->has(HtmlHeadBag::class))
+		{
+
+			/** @var HtmlHeadBag $htmlHeadBag */
+			$htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
+			$htmlDecoder = System::getContainer()->get('contao.string.html_decoder');
+
+			if ($objEpisode->pageTitle)
+			{
+				$htmlHeadBag->setTitle($objEpisode->pageTitle); // Already stored decoded
+			}
+			elseif ($objEpisode->title)
+			{
+				$htmlHeadBag->setTitle($objEpisode->title);
+			}
+
+			if ($objEpisode->description)
+			{
+				$htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($objEpisode->description));
+			}
+
+		}
 
         return $template->getResponse();
     }
