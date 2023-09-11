@@ -18,9 +18,11 @@ use Contao\ModuleModel;
 use Contao\Template;
 use Contao\Input;
 use Contao\System;
+use Contao\Environment;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
+use Contao\CoreBundle\Exception\PageNotFoundException;
 
 use Respinar\PodcastBundle\Controller\Podcast;
 
@@ -43,6 +45,12 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
 		}
 
         $objEpisode = EpisodeModel::findOneByAlias(Input::get('items'));
+
+        # Throw 404 error if episode not founded.
+        if (null === $objEpisode)
+		{
+			throw new PageNotFoundException('Page not found: ' . Environment::get('uri'));
+		}
 
         $objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
 
