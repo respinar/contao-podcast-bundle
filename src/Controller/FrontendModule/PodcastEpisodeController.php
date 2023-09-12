@@ -19,6 +19,7 @@ use Contao\Template;
 use Contao\Input;
 use Contao\System;
 use Contao\Environment;
+use Contao\PageModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
@@ -37,6 +38,12 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $page = $this->getPageModel();
+
+		if ($model->overviewPage)
+		{
+			$template->referer = PageModel::findById($model->overviewPage)->getFrontendUrl();
+			$template->back = $model->customLabel ?: $GLOBALS['TL_LANG']['MSC']['newsOverview'];
+		}
 
         // Set the item from the auto_item parameter
 		if (!isset($_GET['items']) && $GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
