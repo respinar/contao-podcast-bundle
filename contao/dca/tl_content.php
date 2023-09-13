@@ -17,7 +17,7 @@ use Respinar\PodcastBundle\Controller\ContentElement\PodcastEpisodeController;
 /**
  * Content elements
  */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['podcast_episode'] = '
+$GLOBALS['TL_DCA']['tl_content']['palettes'][PodcastEpisodeController::TYPE] = '
     {type_legend},type,headline;
     {config_legend},podcast_episode;
     {template_legend:hide},podcast_metaFields,podcast_template,customTpl;
