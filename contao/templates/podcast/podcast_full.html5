@@ -1,21 +1,21 @@
-<div class="episode_full">    
+<div class="episode_full">
   <div class="episode_header">
-    
+
     <?php $this->insert('image', $this->arrData); ?>
     <h1><?= $this->title ?></h1>
-    <hr>
+    <p class="info"><time datetime="<?= $this->datetime ?>"><?= $this->date ?></time> <?= $this->author ?></p>
     <h3><?= $this->subtitle ?></h3>
     <p><?= $this->teaser ?></p>
-    
+
 
   <figure class="<?= $this->containerClass ?>">
-    
-    <audio controls="">    
-        
+
+    <audio controls="">
+
           <source type="<?= $this->file->mime ?>" src="<?= $this->file->path ?>">
-        
+
     </audio>
-    
+
     <?php if ($this->caption): ?>
       <figcaption class="caption"><?= $this->caption ?></figcaption>
     <?php endif; ?>
