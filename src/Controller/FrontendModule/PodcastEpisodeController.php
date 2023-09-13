@@ -20,6 +20,7 @@ use Contao\Input;
 use Contao\System;
 use Contao\Environment;
 use Contao\PageModel;
+use Contao\StringUtil;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
@@ -51,7 +52,9 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
 			Input::setGet('items', Input::get('auto_item'));
 		}
 
-        $objEpisode = EpisodeModel::findOneByAlias(Input::get('items'));
+		//$objProduct = ProductModel::findOneByAlias(Input::get('items'));
+		$model->podcast_channels = StringUtil::deserialize($model->podcast_channels);
+        $objEpisode = EpisodeModel::findPublishedByParentAndIdOrAlias(Input::get('items'), $model->podcast_channels);
 
         # Throw 404 error if episode not founded.
         if (null === $objEpisode)
