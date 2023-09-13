@@ -20,14 +20,14 @@ use Respinar\PodcastBundle\Controller\FrontendModule\PodcastEpisodeController;
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastListController::TYPE] = '
     {title_legend},name,headline,type;
-    {config_legend},podcast_channel,numberOfItems,podcast_featured,podcast_order,skipFirst,perPage;
+    {config_legend},podcast_channels,numberOfItems,podcast_featured,podcast_order,skipFirst,perPage;
     {template_legend:hide},podcast_metaFields,podcast_template,customTpl;
     {image_legend:hide},imgSize;
     {protected_legend:hide},protected;
     {expert_legend:hide},guests,cssID';
 $GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastEpisodeController::TYPE] = '
     {title_legend},name,headline,type;
-    {config_legend},podcast_channel,overviewPage,customLabel;
+    {config_legend},podcast_channels,overviewPage,customLabel;
     {template_legend:hide},podcast_metaFields,podcast_template,customTpl;
     {image_legend:hide},imgSize;
     {protected_legend:hide},protected;
@@ -36,12 +36,11 @@ $GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastEpisodeController::TYPE] = '
 
 
 // Add fields to tl_module
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channel'] = array
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channels'] = array
 (
 	'exclude'                 => true,
 	'inputType'               => 'checkbox',
     'foreignKey'              => 'tl_podcast_channel.title',
-	//'options_callback'        => array('tl_module_news', 'getNewsArchives'),
 	'eval'                    => array('multiple'=>true, 'foreignTable' => 'tl_podcast_channel', 'mandatory'=>true),
 	'sql'                     => "blob NULL"
 );
