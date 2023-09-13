@@ -32,7 +32,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['podcast_episode'] = array
 	'exclude'                 => true,
 	'inputType'               => 'select',
     'foreignKey'              => 'tl_podcast_episode.title',
-	//'options_callback'      => array('tl_module_news', 'getNewsArchives'),
 	'eval'                    => array('multiple'=>false, 'foreignTable' => 'tl_podcast_episode', 'chosen' => true, 'mandatory'=>true, 'tl_class'=>'w50'),
 	'sql'                     => "blob NULL"
 );
