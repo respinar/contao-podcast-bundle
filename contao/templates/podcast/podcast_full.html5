@@ -23,3 +23,8 @@
 
   </div>
 </div>
+
+<?php
+
+  $schemaOrg = $this->getSchemaOrgData();
+  $this->addSchemaOrg($schemaOrg);
