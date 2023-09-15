@@ -21,8 +21,10 @@ use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\FilesModel;
+use Contao\UserModel;
 use Contao\CoreBundle\Util\LocaleUtil;
 use Contao\File;
+use Respinar\PodcastBundle\Model\EpisodeModel;
 
 class Podcast {
 
@@ -97,9 +99,19 @@ class Podcast {
 			$objFile->title = StringUtil::specialchars($objFile->name);
 
 			$objTemplate->file = $objFile;
-
-
 		}
+
+		// schema.org information
+		$objTemplate->getSchemaOrgData = static function () use ($objTemplate, $objEpisode): array {
+			$jsonLd = Podcast::getSchemaOrgData($objEpisode);
+
+			if ($objTemplate->file)
+			{
+				$jsonLd['associatedMedia']['contentUrl'] = '/'.$objTemplate->file->path;
+			}
+
+			return $jsonLd;
+		};
 
         return $objTemplate->parse();
     }
@@ -116,7 +128,7 @@ class Podcast {
     }
 
 
-    static public function generateEpisodeUrl ($objItem, $objPodcast, $blnAddArchive=false, $blnAbsolute=false) {
+    static public function generateEpisodeUrl ($objItem, $blnAddArchive=false, $blnAbsolute=false) {
         $strCacheKey = 'id_' . $objItem->id . ($blnAbsolute ? '_absolute' : '');
 
 		// Load the URL from cache
@@ -131,15 +143,15 @@ class Podcast {
 		// Link to the default page
 		if (self::$arrUrlCache[$strCacheKey] === null)
 		{
-			$objPage = PageModel::findByPk($objPodcast->jumpTo);
+			$objPage = PageModel::findByPk($objItem->getRelated('pid')->jumpTo);
 
 			if (!$objPage instanceof PageModel)
 			{
-				self::$arrUrlCache[$strCacheKey] = StringUtil::ampersand(Environment::get('request'));
+				self::$arrUrlCache[$strCacheKey] = StringUtil::ampersand(Environment::get('requestUri'));
 			}
 			else
 			{
-				$params = (Config::get('useAutoItem') ? '/' : '/items/') . ($objItem->alias ?: $objItem->id);
+				$params = '/' . ($objItem->alias ?: $objItem->id);
 
 				self::$arrUrlCache[$strCacheKey] = StringUtil::ampersand($blnAbsolute ? $objPage->getAbsoluteUrl($params) : $objPage->getFrontendUrl($params));
 			}
@@ -147,5 +159,60 @@ class Podcast {
 
 		return self::$arrUrlCache[$strCacheKey];
     }
+
+	/**
+	 * Return the schema.org data from a news article
+	 *
+	 * @param NewsModel $objArticle
+	 *
+	 * @return array
+	 */
+	public static function getSchemaOrgData(EpisodeModel $objEpisode): array
+	{
+		$htmlDecoder = System::getContainer()->get('contao.string.html_decoder');
+
+		$jsonLd = array(
+			'@type' => 'PodcastEpisode',
+			'identifier' => '#/schema/podcastepisode/' . $objEpisode->id,
+			'url' => '/'.self::generateEpisodeUrl($objEpisode),
+			'name' => $objEpisode->title,
+			'datePublished' => date('Y-m-d', $objEpisode->date),
+			"timeRequired"=> "PT37M",
+		);
+
+		if ($objEpisode->description)
+		{
+			$jsonLd['description'] = $htmlDecoder->htmlToPlainText($objEpisode->description);
+		}
+
+		/** @var UserModel $objAuthor */
+		if (($objAuthor = $objEpisode->getRelated('author')) instanceof UserModel)
+		{
+			$jsonLd['author'] = array(
+				'@type' => 'Person',
+				'name' => $objAuthor->name,
+			);
+		}
+
+		$jsonLd['associatedMedia'] = array(
+			'@type' => 'MediaObject',
+		);
+
+
+		$page_id = $objEpisode->getRelated('pid')->jumpTo;
+		$url = PageModel::findById($page_id);
+		var_dump( $url);
+		exit('STOP');
+		$jsonLd['partOfSeries'] = array(
+			'@type' => 'PodcastSeries',
+			"name" => $objEpisode->getRelated('pid')->title,
+			//"url"=> PageModel::findById($objEpisode->getRelated('pid')->jumpTo)->getFrontendUrl(),
+			//"url" => $url
+		);
+
+
+
+		return $jsonLd;
+	}
 
 }
