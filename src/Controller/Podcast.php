@@ -20,10 +20,12 @@ use Contao\Environment;
 use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
+use Contao\ModuleModel;
 use Contao\FilesModel;
 use Contao\UserModel;
 use Contao\CoreBundle\Util\LocaleUtil;
 use Contao\File;
+use Respinar\PodcastBundle\Model\ChannelModel;
 use Respinar\PodcastBundle\Model\EpisodeModel;
 
 class Podcast {
@@ -34,13 +36,13 @@ class Podcast {
 	 */
 	private static $arrUrlCache = array();
 
-    static public function parseEpisode ($objEpisode, $objPodcast, $model, $page, $blnAddArchive=false) {
+    static public function parseEpisode (EpisodeModel $objEpisode, $model, $page, $blnAddArchive=false) {
 
         $objTemplate = new FrontendTemplate($model->podcast_template);
 
 		$objTemplate->setData($objEpisode->row());
 
-		$objTemplate->link = Podcast::generateEpisodeUrl($objEpisode, $objPodcast, $blnAddArchive);
+		$objTemplate->link = Podcast::generateEpisodeUrl($objEpisode, $blnAddArchive);
 
 		if ($objEpisode->coverSRC)
 		{
@@ -102,8 +104,8 @@ class Podcast {
 		}
 
 		// schema.org information
-		$objTemplate->getSchemaOrgData = static function () use ($objTemplate, $objEpisode): array {
-			$jsonLd = Podcast::getSchemaOrgData($objEpisode);
+		$objTemplate->getSchemaOrgData = static function () use ($objTemplate, $objEpisode, $model): array {
+			$jsonLd = Podcast::getSchemaOrgData($objEpisode, $model);
 
 			if ($objTemplate->file)
 			{
@@ -117,12 +119,12 @@ class Podcast {
     }
 
 
-    static public function parseEpisodes ($objEpisodes, $objPodcast, $model, $page, $blnAddArchive=false) {
+    static public function parseEpisodes ($objEpisodes, $model, $page, $blnAddArchive=false) {
 
         $arrEpisodes = array();
 
         foreach($objEpisodes as $objEpisode){
-            $arrEpisodes[] = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $page, $blnAddArchive);
+            $arrEpisodes[] = Podcast::parseEpisode($objEpisode, $model, $page, $blnAddArchive);
         }
         return $arrEpisodes;
     }
@@ -167,7 +169,7 @@ class Podcast {
 	 *
 	 * @return array
 	 */
-	public static function getSchemaOrgData(EpisodeModel $objEpisode): array
+	public static function getSchemaOrgData(EpisodeModel $objEpisode, $model): array
 	{
 		$htmlDecoder = System::getContainer()->get('contao.string.html_decoder');
 
@@ -199,18 +201,16 @@ class Podcast {
 		);
 
 
-		$page_id = $objEpisode->getRelated('pid')->jumpTo;
-		$url = PageModel::findById($page_id);
-		var_dump( $url);
-		exit('STOP');
+
+		if (isset($model->overviewPage)) {
+			$url = '/'.PageModel::findById($model->overviewPage)->getFrontendUrl();
+		}
+
 		$jsonLd['partOfSeries'] = array(
 			'@type' => 'PodcastSeries',
 			"name" => $objEpisode->getRelated('pid')->title,
-			//"url"=> PageModel::findById($objEpisode->getRelated('pid')->jumpTo)->getFrontendUrl(),
-			//"url" => $url
+			"url"=> $url ?? ''
 		);
-
-
 
 		return $jsonLd;
 	}
