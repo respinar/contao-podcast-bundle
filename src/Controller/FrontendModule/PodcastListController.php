@@ -37,11 +37,11 @@ class PodcastListController extends AbstractFrontendModuleController
     {
         $page = $this->getPageModel();
 
-        $objPodcast = ChannelModel::findOneBy('id', StringUtil::deserialize($model->podcast)[0]);
+        $objChannel = ChannelModel::findOneBy('id', StringUtil::deserialize($model->podcast)[0]);
 
-        $objEpisodes = EpisodeModel::findBy('pid', $objPodcast->id);
+        $objEpisodes = EpisodeModel::findBy('pid', $objChannel->id);
 
-        $template->arrEpisodes = Podcast::parseEpisodes($objEpisodes, $objPodcast, $model, $page);
+        $template->arrEpisodes = Podcast::parseEpisodes($objEpisodes, $model, $page);
 
         return $template->getResponse();
     }
