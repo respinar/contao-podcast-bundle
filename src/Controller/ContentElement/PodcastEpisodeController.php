@@ -38,16 +38,14 @@ class PodcastEpisodeController extends AbstractContentElementController
 
         if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request))
 		{
-			//return $template->getResponse();
+			return $template->getResponse();
 		}
 
         $objEpisode = EpisodeModel::findOneByID($model->podcast_episode);
 
-        $objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
-
         $model->imgSize = $model->size;
 
-        $template->episode = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $page);
+        $template->episode = Podcast::parseEpisode($objEpisode, $model, $page);
 
         return $template->getResponse();
     }
