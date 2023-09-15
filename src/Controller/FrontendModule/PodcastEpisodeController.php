@@ -62,9 +62,9 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
 			throw new PageNotFoundException('Page not found: ' . Environment::get('uri'));
 		}
 
-        $objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
+        //$objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
 
-        $template->episode = Podcast::parseEpisode($objEpisode, $objPodcast, $model, $page);
+        $template->episode = Podcast::parseEpisode($objEpisode, $model, $page);
 
         // Page title and Description
         $responseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
