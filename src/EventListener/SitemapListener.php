@@ -45,27 +45,27 @@ class SitemapListener
         $time = time();
 
 		// Get all catalog categories
-		$objPodcasts = $this->framework->getAdapter(ChannelModel::class)->findByProtected('');
+		$objChannels = $this->framework->getAdapter(ChannelModel::class)->findByProtected('');
 		//ProductCatalogModel::findByProtected('');
 
-		if (null === $objPodcasts) {
+		if (null === $objChannels) {
             return;
         }
 
 		// Walk through each catalog
-		foreach ($objPodcasts as $objPodcast)
+		foreach ($objChannels as $objChannel)
 		{
 			// Skip catalog without target page
-			if (!$objPodcast->jumpTo) {
+			if (!$objChannel->jumpTo) {
 				continue;
 			}
 
 			// Skip catalog categories outside the root nodes
-			if (!\in_array($objPodcast->jumpTo, $arrRoot, true)) {
+			if (!\in_array($objChannel->jumpTo, $arrRoot, true)) {
 				continue;
 			}
 
-			$objParent = $this->framework->getAdapter(PageModel::class)->findWithDetails($objPodcast->jumpTo);
+			$objParent = $this->framework->getAdapter(PageModel::class)->findWithDetails($objChannel->jumpTo);
 
 			// The target page does not exist
             if (null === $objParent) {
@@ -88,7 +88,7 @@ class SitemapListener
             }
 
 			// Get the items
-            $objEpisodes = $this->framework->getAdapter(EpisodeModel::class)->findPublishedDefaultByPid($objPodcast->id);
+            $objEpisodes = $this->framework->getAdapter(EpisodeModel::class)->findPublishedDefaultByPid($objChannel->id);
 
 			if (null === $objEpisodes) {
                 continue;
