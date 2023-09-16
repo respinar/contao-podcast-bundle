@@ -12,15 +12,15 @@ declare(strict_types=1);
 
 use Contao\Controller;
 
-use Respinar\PodcastBundle\Controller\FrontendModule\PodcastListController;
+use Respinar\PodcastBundle\Controller\FrontendModule\PodcastChannelController;
 use Respinar\PodcastBundle\Controller\FrontendModule\PodcastEpisodeController;
 
 /**
  * Frontend modules
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastListController::TYPE] = '
+$GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastChannelController::TYPE] = '
     {title_legend},name,headline,type;
-    {config_legend},podcast_channels,numberOfItems,podcast_featured,podcast_order,skipFirst,perPage;
+    {config_legend},podcast_channel,numberOfItems,podcast_featured,podcast_order,skipFirst,perPage;
     {template_legend:hide},podcast_metaFields,podcast_template,customTpl;
     {image_legend:hide},imgSize;
     {protected_legend:hide},protected;
@@ -36,6 +36,14 @@ $GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastEpisodeController::TYPE] = '
 
 
 // Add fields to tl_module
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channel'] = array
+(
+	'exclude'                 => true,
+	'inputType'               => 'radio',
+    'foreignKey'              => 'tl_podcast_channel.title',
+	'eval'                    => array('multiple'=>false, 'foreignTable' => 'tl_podcast_channel', 'mandatory'=>true),
+	'sql'                     => "int(10) unsigned NULL"
+);
 $GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channels'] = array
 (
 	'exclude'                 => true,
