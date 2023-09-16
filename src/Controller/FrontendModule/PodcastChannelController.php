@@ -37,9 +37,13 @@ class PodcastChannelController extends AbstractFrontendModuleController
     {
         $page = $this->getPageModel();
 
-        $objChannel = ChannelModel::findOneBy('id', StringUtil::deserialize($model->podcast)[0]);
+        //$objChannel = ChannelModel::findOneBy('id', StringUtil::deserialize($model->podcast)[0]);
 
-        $objEpisodes = EpisodeModel::findBy('pid', $objChannel->id);
+        if (Podcast::isProtected($model->podcast_channel)) {
+            return $template->getResponse();
+        }
+
+        $objEpisodes = EpisodeModel::findBy('pid', $model->podcast_channel);
 
         $template->arrEpisodes = Podcast::parseEpisodes($objEpisodes, $model, $page);
 
