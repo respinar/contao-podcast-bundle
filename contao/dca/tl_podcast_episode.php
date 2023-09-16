@@ -48,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
             'panelLayout' => 'filter;sort,search,limit'
         ),
         'label'             => array(
-            'fields' => array('date', 'episode', 'title'),
+            'fields' => array('date', 'episodeNumber', 'title'),
             'format' => '<span style="color:#999;padding-left:3px">[%s]</span> episode: %s - %s',
         ),
         'global_operations' => array(
@@ -96,11 +96,11 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 	(
 		//'__selector__'      => array('addImage'),
 		'default'           => '
-			{title_legend},title,featured,alias,episode;
+			{title_legend},title,featured,alias,episodeNumber;
 			{date_legend},date,author;
 			{podcast_legend},podcastSRC;
 			{image_legend},coverSRC;
-			{meta_legend},pageTitle,description;
+			{meta_legend},pageTitle,duration,description;
 			{teaser_legend},subheadline,teaser;
 			{expert_legend:hide},cssClass;
 			{publish_legend},published,start,stop'
@@ -182,12 +182,12 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			// ),
 			'sql'                     => "int(10) unsigned NOT NULL default 0"
 		),
-        'episode' => array
+        'episodeNumber' => array
 		(
 			'exclude'                 => true,
 			'sorting'                 => true,
 			'inputType'               => 'text',
-			'eval'                    => array('rgxp'=>'number', 'mandatory'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50 wizard'),
+			'eval'                    => array('rgxp'=>'number', 'mandatory'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
 			'sql'                     => "int(10) unsigned NULL"
 		),
 		'pageTitle' => array
@@ -205,6 +205,13 @@ $GLOBALS['TL_DCA']['tl_podcast_episode'] = array(
 			'inputType'               => 'textarea',
 			'eval'                    => array('style'=>'height:60px', 'decodeEntities'=>true, 'tl_class'=>'clr'),
 			'sql'                     => "text NULL"
+		),
+		'duration' => array
+		(
+			'exclude'                 => true,
+			'inputType'               => 'text',
+			'eval'                    => array('rgxp'=>'number', 'mandatory'=>true, 'doNotCopy'=>true, 'tl_class'=>'w50'),
+			'sql'                     => "int(5) unsigned NULL"
 		),
 		'subheadline' => array
 		(
