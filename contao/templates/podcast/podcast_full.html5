@@ -2,24 +2,26 @@
   <div class="episode_header">
 
     <?php $this->insert('image', $this->arrData); ?>
+
     <h1><?= $this->title ?></h1>
+
     <p class="info"><time datetime="<?= $this->datetime ?>"><?= $this->date ?></time> <?= $this->author ?> ~ <?= $this->duration ?></p>
-    <h3><?= $this->subtitle ?></h3>
-    <p><?= $this->teaser ?></p>
 
-
-  <figure class="<?= $this->containerClass ?>">
-
-    <audio controls="">
-
+    <figure class="<?= $this->containerClass ?>">
+      <audio controls="">
           <source type="<?= $this->file->mime ?>" src="<?= $this->file->path ?>">
+      </audio>
+      <?php if ($this->caption): ?>
+        <figcaption class="caption"><?= $this->caption ?></figcaption>
+      <?php endif; ?>
+    </figure>
 
-    </audio>
-
-    <?php if ($this->caption): ?>
-      <figcaption class="caption"><?= $this->caption ?></figcaption>
+    <?php if($this->subheadline): ?>
+      <h2><?= $this->subheadline ?></h2>
     <?php endif; ?>
-  </figure>
+    <?php if ($this->teaser): ?>
+      <div class="teaser"><?= $this->teaser ?></div>
+    <?php endif; ?>
 
   </div>
 </div>
