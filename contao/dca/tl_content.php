@@ -12,16 +12,16 @@ declare(strict_types=1);
 
 use Contao\Controller;
 
-use Respinar\PodcastBundle\Controller\ContentElement\PodcastEpisodeController;
+use Respinar\PodcastBundle\Controller\ContentElement\PodcastController;
 
 /**
  * Content elements
  */
-$GLOBALS['TL_DCA']['tl_content']['palettes'][PodcastEpisodeController::TYPE] = '
+$GLOBALS['TL_DCA']['tl_content']['palettes'][PodcastController::TYPE] = '
     {type_legend},type,headline;
     {config_legend},podcast_episode;
-    {template_legend:hide},podcast_metaFields,podcast_template,customTpl;
-    {image_legend:hide},size;
+    {meta_legend:hide},podcast_metaFields;
+    {template_legend:hide},customTpl,podcast_template,size;
     {protected_legend:hide},protected;
     {expert_legend:hide},guests,cssID;
     {invisible_legend:hide},invisible,start,stop';
