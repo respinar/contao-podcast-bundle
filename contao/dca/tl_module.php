@@ -20,16 +20,16 @@ use Respinar\PodcastBundle\Controller\FrontendModule\PodcastEpisodeController;
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastChannelController::TYPE] = '
     {title_legend},name,headline,type;
-    {config_legend},podcast_channel,numberOfItems,podcast_featured,podcast_order,skipFirst,perPage;
-    {template_legend:hide},podcast_metaFields,podcast_template,customTpl;
-    {image_legend:hide},imgSize;
+    {config_legend},podcast_channel,numberOfItems,podcast_featured,podcast_sortBy,skipFirst,perPage;
+    {template_legend:hide},podcast_metaFields,;
+    {image_legend:hide},customTpl,podcast_template,podcast_listClass,imgSize;
     {protected_legend:hide},protected;
     {expert_legend:hide},guests,cssID';
 $GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastEpisodeController::TYPE] = '
     {title_legend},name,headline,type;
     {config_legend},podcast_channels,overviewPage,customLabel;
-    {template_legend:hide},podcast_metaFields,podcast_template,customTpl;
-    {image_legend:hide},imgSize;
+    {meta_legend:hide},podcast_metaFields;
+    {template_legend:hide},podcast_template,customTpl,imgSize;
     {protected_legend:hide},protected;
     {expert_legend:hide},guests,cssID';
 
@@ -85,33 +85,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['podcast_template'] = array
 	'sql'                     => "varchar(64) COLLATE ascii_bin NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_format'] = array
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_listClass'] = array
 (
 	'exclude'                 => true,
-	'inputType'               => 'select',
-	'options'                 => array('news_day', 'news_month', 'news_year'),
-	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-	'eval'                    => array('tl_class'=>'w50 clr', 'submitOnChange'=>true),
-	'sql'                     => "varchar(32) COLLATE ascii_bin NOT NULL default 'news_month'"
+	'inputType'               => 'text',
+	'eval'                    => array('maxlength'=>128, 'tl_class'=>'w50'),
+	'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_startDay'] = array
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_sortBy'] = array
 (
 	'exclude'                 => true,
 	'inputType'               => 'select',
-	'options'                 => array(0, 1, 2, 3, 4, 5, 6),
-	'reference'               => &$GLOBALS['TL_LANG']['DAYS'],
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "smallint(5) unsigned NOT NULL default 0"
-);
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_order'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'select',
-	//'options_callback'        => array('tl_module_news', 'getSortingOptions'),
-    'options'                 => array('order_date_asc', 'order_date_desc'),
+    'options'                 => array('number_asc','number_desc','date_asc', 'date_desc'),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
 	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "varchar(32) COLLATE ascii_bin NOT NULL default 'order_date_desc'"
+	'sql'                     => "varchar(32) COLLATE ascii_bin NOT NULL default 'numb_desc'"
 );
