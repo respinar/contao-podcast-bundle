@@ -29,9 +29,9 @@ use Respinar\PodcastBundle\Model\ChannelModel;
 use Respinar\ContaoPodcastBundle;
 
 #[AsFrontendModule(category: "podcasts")]
-class PodcastListController extends AbstractFrontendModuleController
+class PodcastChannelController extends AbstractFrontendModuleController
 {
-    public const TYPE = 'podcast_list';
+    public const TYPE = 'podcast_channel';
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
