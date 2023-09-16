@@ -59,7 +59,7 @@ class EpisodeModel extends Model
 	public static function findPublishedDefaultByPid($intPid, array $arrOptions=array())
 	{
 		$t = static::$strTable;
-		$arrColumns = array("$t.pid=? AND $t.source='default'");
+		$arrColumns = array("$t.pid=?");
 
 		if (!static::isPreviewMode($arrOptions))
 		{
