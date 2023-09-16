@@ -180,7 +180,7 @@ class Podcast {
 			'url' => '/'.self::generateEpisodeUrl($objEpisode),
 			'name' => $objEpisode->title,
 			'datePublished' => date('Y-m-d', $objEpisode->date),
-			"timeRequired"=> "PT37M",
+			"duration" => self::iso8601_duration($objEpisode->duration),
 		);
 
 		if ($objEpisode->description)
@@ -280,6 +280,36 @@ class Podcast {
 		}
 
 		return false;
+	}
+
+	/**
+	 * convert seconds to ISO8601 format
+	 *
+	 * @param int $seconts
+	 *
+	 * @return string
+	 */
+	public static function iso8601_duration($seconds)
+	{
+		$intervals = array('H' => 3600, 'M' => 60, 'S' => 1);
+
+		$pt = 'P';
+		$result = '';
+		foreach ($intervals as $tag => $divisor)
+		{
+			$qty = floor($seconds/$divisor);
+			if ( !$qty && $result == '' )
+			{
+			$pt = 'T';
+			continue;
+			}
+
+			$seconds -= $qty * $divisor;
+			$result  .= "$qty$tag";
+		}
+		if ( $result=='' )
+			$result='0S';
+		return "$pt$result";
 	}
 
 }
