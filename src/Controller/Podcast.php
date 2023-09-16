@@ -50,6 +50,8 @@ class Podcast {
 
 		$objTemplate->date = Date::parse($objPage->dateFormat, $objEpisode->date);
 
+		$objTemplate->duration = self::getDuration($objEpisode->duration);
+
 		/** @var UserModel $objAuthor */
 		if (($objAuthor = $objEpisode->getRelated('author')) instanceof UserModel)
 		{
@@ -323,6 +325,33 @@ class Podcast {
 		if ( $result=='' )
 			$result='0S';
 		return "$pt$result";
+	}
+
+	/**
+	 * get duration
+	 *
+	 * @param int $seconts
+	 *
+	 * @return string
+	 */
+	public static function getDuration($seconds)
+	{
+		$result = "";
+
+		$hours = floor($seconds/3600);
+
+		if ($hours > 0 ) {
+			$result .= "$hours hr ";
+			$seconds %= 3600;
+		}
+
+		$mins = round($seconds/60);
+
+		if ($mins > 0) {
+			$result .= "$mins min";
+		}
+
+		return $result;
 	}
 
 }
