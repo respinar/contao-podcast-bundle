@@ -193,7 +193,7 @@ class Podcast {
 			'identifier' => '#/schema/podcastepisode/' . $objEpisode->id,
 			'url' => '/'.self::generateEpisodeUrl($objEpisode),
 			'name' => $objEpisode->title,
-			'datePublished' => date('Y-m-d', $objEpisode->date),
+			'datePublished' => date('Y-m-d', intval($objEpisode->date)),
 			"duration" => self::iso8601_duration($objEpisode->duration),
 			"episodeNumber" => $objEpisode->episodeNumber,
 		);
