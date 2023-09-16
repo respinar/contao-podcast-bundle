@@ -20,6 +20,7 @@ use Contao\Environment;
 use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
+use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\ModuleModel;
 use Contao\FilesModel;
 use Contao\UserModel;
@@ -213,6 +214,72 @@ class Podcast {
 		);
 
 		return $jsonLd;
+	}
+
+	/**
+	 * Sort out protected channels
+	 *
+	 * @param array $arrChannels
+	 *
+	 * @return array
+	 */
+	public static function sortOutProtected($arrChannels)
+	{
+		if (empty($arrChannels) || !\is_array($arrChannels))
+		{
+			return $arrChannels;
+		}
+
+		$objChannel = ChannelModel::findMultipleByIds($arrChannels);
+		$arrChannels = array();
+
+		if ($objChannel !== null)
+		{
+			$security = System::getContainer()->get('security.helper');
+
+			while ($objChannel->next())
+			{
+				if ($objChannel->protected && !$security->isGranted(ContaoCorePermissions::MEMBER_IN_GROUPS, StringUtil::deserialize($objChannel->groups, true)))
+				{
+					continue;
+				}
+
+				$arrChannels[] = $objChannel->id;
+			}
+		}
+
+		return $arrChannels;
+	}
+
+	/**
+	 * cheching protected channel
+	 *
+	 * @param int $channel
+	 *
+	 * @return boolean
+	 */
+	public static function isProtected($channel)
+	{
+		if (!isset($channel))
+		{
+			return false;
+		}
+
+		$objChannel = ChannelModel::findById($channel);
+
+		if (empty($objChannel))
+		{
+			return false;
+		}
+
+		$security = System::getContainer()->get('security.helper');
+
+		if ($objChannel->protected && !$security->isGranted(ContaoCorePermissions::MEMBER_IN_GROUPS, StringUtil::deserialize($objChannel->groups, true)))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 }
