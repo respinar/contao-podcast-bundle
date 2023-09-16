@@ -3,7 +3,7 @@
 
     <?php $this->insert('image', $this->arrData); ?>
     <h1><?= $this->title ?></h1>
-    <p class="info"><time datetime="<?= $this->datetime ?>"><?= $this->date ?></time> <?= $this->author ?></p>
+    <p class="info"><time datetime="<?= $this->datetime ?>"><?= $this->date ?></time> <?= $this->author ?> ~ <?= $this->duration ?></p>
     <h3><?= $this->subtitle ?></h3>
     <p><?= $this->teaser ?></p>
 
