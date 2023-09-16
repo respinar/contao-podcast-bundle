@@ -2,12 +2,13 @@
 
 <?php $this->block('content'); ?>
 
-<div class="podcast_episodes">
-<?php
-    foreach($this->arrEpisodes as $episode)  {
-        echo $episode;
-    }
-?>
-</div>
+  <?php if (empty($this->episodes)): ?>
+    <p class="empty"><?= $this->empty; ?></p>
+  <?php else: ?>
+  <div class="podcast_episodes <?= $this->podcast_listClass ?>">
+    <?= implode('', $this->episodes) ?>
+  </div>
+    <?= $this->pagination; ?>
+  <?php endif; ?>
 
 <?php $this->endblock(); ?>
