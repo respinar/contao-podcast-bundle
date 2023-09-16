@@ -61,7 +61,7 @@ class SitemapListener
 			}
 
 			// Skip catalog categories outside the root nodes
-			if (!\in_array($objChannel->jumpTo, $arrRoot, true)) {
+			if (!\in_array($objChannel->jumpTo, $arrRoot, false)) {
 				continue;
 			}
 
