@@ -50,6 +50,13 @@ class Podcast {
 
 		$objTemplate->date = Date::parse($objPage->dateFormat, $objEpisode->date);
 
+		/** @var UserModel $objAuthor */
+		if (($objAuthor = $objEpisode->getRelated('author')) instanceof UserModel)
+		{
+			$objTemplate->author = $GLOBALS['TL_LANG']['MSC']['by'] . ' ' . $objAuthor->name;
+			$objTemplate->authorModel = $objAuthor;
+		}
+
 		if ($objEpisode->coverSRC)
 		{
 			//$imgSize = $objArticle->size ?: null;
