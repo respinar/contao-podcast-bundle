@@ -37,11 +37,9 @@ class PodcastChannelController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
-        $page = $this->getPageModel();
-
-        $template->empty = $GLOBALS['TL_LANG']['MSC']['emptyChannel'];
 
         if (Podcast::isProtected($model->podcast_channel)) {
+			$template->message = $GLOBALS['TL_LANG']['MSC']['accessError'];
             return $template->getResponse();
         }
 
@@ -50,8 +48,11 @@ class PodcastChannelController extends AbstractFrontendModuleController
         // No Podcast Channel
 		if (empty($objChannel))
 		{
+			$template->message = $GLOBALS['TL_LANG']['MSC']['notExist'];
 			return  $template->getResponse();
 		}
+
+		$page = $this->getPageModel();
 
         $offset = intval($model->skipFirst);
 		$limit = null;
@@ -82,6 +83,7 @@ class PodcastChannelController extends AbstractFrontendModuleController
 
 		if ($intTotal < 1)
 		{
+			$template->message = $GLOBALS['TL_LANG']['MSC']['emptyChannel'];
 			return $template->getResponse();
 		}
 
