@@ -43,7 +43,7 @@ class Podcast {
 
 		$objTemplate->setData($objEpisode->row());
 
-		$objTemplate->link = Podcast::generateEpisodeUrl($objEpisode, $blnAddArchive);
+		$objTemplate->link = self::generateEpisodeUrl($objEpisode, $blnAddArchive);
 
 		if ($objEpisode->coverSRC)
 		{
@@ -106,7 +106,7 @@ class Podcast {
 
 		// schema.org information
 		$objTemplate->getSchemaOrgData = static function () use ($objTemplate, $objEpisode, $model): array {
-			$jsonLd = Podcast::getSchemaOrgData($objEpisode, $model);
+			$jsonLd = self::getSchemaOrgData($objEpisode, $model);
 
 			if ($objTemplate->file)
 			{
@@ -125,7 +125,7 @@ class Podcast {
         $arrEpisodes = array();
 
         foreach($objEpisodes as $objEpisode){
-            $arrEpisodes[] = Podcast::parseEpisode($objEpisode, $model, $page, $blnAddArchive);
+            $arrEpisodes[] = self::parseEpisode($objEpisode, $model, $page, $blnAddArchive);
         }
         return $arrEpisodes;
     }
