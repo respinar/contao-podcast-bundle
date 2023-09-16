@@ -78,7 +78,7 @@ class PodcastChannelController extends AbstractFrontendModuleController
 
 		$template->episodes = array();
 
-		$intTotal = EpisodeModel::countPublishedByPids([$model->podcast_channel], $blnFeatured);
+		$intTotal = EpisodeModel::countPublishedByPid($model->podcast_channel, $blnFeatured);
 
 		if ($intTotal < 1)
 		{
@@ -152,11 +152,11 @@ class PodcastChannelController extends AbstractFrontendModuleController
         // Get the items
 		if (isset($limit))
 		{
-			$objEpisodes = EpisodeModel::findPublishedByPids([$model->podcast_channel], $blnFeatured, $limit, $offset, $arrOptions);
+			$objEpisodes = EpisodeModel::findPublishedByPid($model->podcast_channel, $blnFeatured, $limit, $offset, $arrOptions);
 		}
 		else
 		{
-			$objEpisodes = EpisodeModel::findPublishedByPids([$model->podcast_channel], $blnFeatured, 0, $offset, $arrOptions);
+			$objEpisodes = EpisodeModel::findPublishedByPid($model->podcast_channel, $blnFeatured, 0, $offset, $arrOptions);
 		}
 
         //$objEpisodes = EpisodeModel::findBy('pid', $model->podcast_channel);
