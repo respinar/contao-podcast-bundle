@@ -100,5 +100,5 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['podcast_sortBy'] = array
     'options'                 => array('number_asc','number_desc','date_asc', 'date_desc'),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
 	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "varchar(32) COLLATE ascii_bin NOT NULL default 'numb_desc'"
+	'sql'                     => "varchar(32) COLLATE ascii_bin NOT NULL default 'number_desc'"
 );
