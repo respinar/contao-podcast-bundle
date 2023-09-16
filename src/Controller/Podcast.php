@@ -25,6 +25,7 @@ use Contao\ModuleModel;
 use Contao\FilesModel;
 use Contao\UserModel;
 use Contao\CoreBundle\Util\LocaleUtil;
+use Contao\Date;
 use Contao\File;
 use Respinar\PodcastBundle\Model\ChannelModel;
 use Respinar\PodcastBundle\Model\EpisodeModel;
@@ -39,11 +40,15 @@ class Podcast {
 
     static public function parseEpisode (EpisodeModel $objEpisode, $model, $page, $blnAddArchive=false) {
 
+		global $objPage;
+
         $objTemplate = new FrontendTemplate($model->podcast_template);
 
 		$objTemplate->setData($objEpisode->row());
 
 		$objTemplate->link = self::generateEpisodeUrl($objEpisode, $blnAddArchive);
+
+		$objTemplate->date = Date::parse($objPage->dateFormat, $objEpisode->date);
 
 		if ($objEpisode->coverSRC)
 		{
