@@ -181,6 +181,7 @@ class Podcast {
 			'name' => $objEpisode->title,
 			'datePublished' => date('Y-m-d', $objEpisode->date),
 			"duration" => self::iso8601_duration($objEpisode->duration),
+			"episodeNumber" => $objEpisode->episodeNumber,
 		);
 
 		if ($objEpisode->description)
