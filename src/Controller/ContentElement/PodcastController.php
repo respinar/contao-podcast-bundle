@@ -25,11 +25,11 @@ use Respinar\PodcastBundle\Controller\Podcast;
 use Respinar\PodcastBundle\Model\EpisodeModel;
 use Respinar\PodcastBundle\Model\ChannelModel;
 
-#[AsContentElement(category: "podcasts")]
-class PodcastEpisodeController extends AbstractContentElementController
+#[AsContentElement(category: "media")]
+class PodcastController extends AbstractContentElementController
 {
 
-    public const TYPE = 'podcast_episode';
+    public const TYPE = 'podcast';
 
 
     protected function getResponse(Template $template, ContentModel $model, Request $request): Response
