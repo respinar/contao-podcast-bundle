@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license MIT
  */
 
-use Respinar\PodcastBundle\Controller\FrontendModule\PodcastListController;
+use Respinar\PodcastBundle\Controller\FrontendModule\PodcastChannelController;
 
 /**
  * Backend modules
@@ -21,5 +21,5 @@ $GLOBALS['TL_LANG']['MOD']['podcasts'] = ['Podcasts', 'Manage Podcasts'];
  * Frontend modules
  */
 $GLOBALS['TL_LANG']['FMD']['podcast_modules'] = 'Podacsts';
-$GLOBALS['TL_LANG']['FMD'][PodcastListController::TYPE] = ['Podcast List', 'Show list of podcasts'];
+$GLOBALS['TL_LANG']['FMD'][PodcastChannelController::TYPE] = ['Podcast Channel', 'Show podcasts of a Channel'];
 
