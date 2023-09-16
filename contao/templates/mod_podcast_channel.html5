@@ -3,7 +3,7 @@
 <?php $this->block('content'); ?>
 
   <?php if (empty($this->episodes)): ?>
-    <p class="empty"><?= $this->empty; ?></p>
+    <p class="message"><?= $this->message; ?></p>
   <?php else: ?>
   <div class="podcast_episodes <?= $this->podcast_listClass ?>">
     <?= implode('', $this->episodes) ?>
