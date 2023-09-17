@@ -81,7 +81,7 @@ $GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
     'palettes' => array
 	(
 		'__selector__'                => array('feed', 'protected'),
-		'default'                     => '{title_legend},title;{config_legend},jumpTo;{author_legend},owner,author;{feed_legend},feed;{detail_legend},coverSRC,description;{protected_legend:hide},protected;'
+		'default'                     => '{title_legend},title;{config_legend},overviewPage,jumpTo;{author_legend},owner,author;{feed_legend},feed;{detail_legend},coverSRC,description;{protected_legend:hide},protected;'
 	),
 
 	// Subpalettes
@@ -224,7 +224,15 @@ $GLOBALS['TL_DCA']['tl_podcast_channel'] = array(
 			'eval'                    => array('fieldType'=>'radio', 'filesOnly'=>true, 'extensions'=>'%contao.image.valid_extensions%', 'mandatory'=>true),
 			'sql'                     => "binary(16) NULL"
 		),
-
+		'overviewPage' => array
+		(
+			'exclude'                 => true,
+			'inputType'               => 'pageTree',
+			'foreignKey'              => 'tl_page.title',
+			'eval'                    => array('mandatory'=>true, 'fieldType'=>'radio', 'tl_class'=>'clr'),
+			'sql'                     => "int(10) unsigned NOT NULL default 0",
+			'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
+		),
         'jumpTo' => array
 		(
 			'exclude'                 => true,
