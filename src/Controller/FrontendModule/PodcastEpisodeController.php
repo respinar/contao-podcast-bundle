@@ -40,12 +40,6 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
     {
         $page = $this->getPageModel();
 
-		if ($model->overviewPage)
-		{
-			$template->referer = PageModel::findById($model->overviewPage)->getFrontendUrl();
-			$template->back = $model->customLabel ?: $GLOBALS['TL_LANG']['MSC']['newsOverview'];
-		}
-
         // Set the item from the auto_item parameter
 		if (!isset($_GET['items']) && $GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
 		{
@@ -61,6 +55,15 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
 		{
 			throw new PageNotFoundException('Page not found: ' . Environment::get('uri'));
 		}
+
+		$template->referer = PageModel::findById($objEpisode->getRelated('pid')->overviewPage)->getFrontendUrl();
+
+		if ($model->overviewPage)
+		{
+			$template->referer = PageModel::findById($model->overviewPage)->getFrontendUrl();
+		}
+
+		$template->back = $model->customLabel ?: $GLOBALS['TL_LANG']['MSC']['newsOverview'];
 
         //$objPodcast = ChannelModel::findByIdOrAlias($objEpisode->pid);
 
