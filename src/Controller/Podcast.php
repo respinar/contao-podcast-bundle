@@ -216,11 +216,13 @@ class Podcast {
 			'@type' => 'MediaObject',
 		);
 
-
-
-		if (isset($model->overviewPage)) {
-			$url = '/'.PageModel::findById($model->overviewPage)->getFrontendUrl();
+		if ($objEpisode->getRelated('pid')) {
+			$url = '/'.PageModel::findById($objEpisode->getRelated('pid')->overviewPage)->getFrontendUrl();
 		}
+
+		// if ($model->overviewPage) {
+		// 	$url = '/'.PageModel::findById($model->overviewPage)->getFrontendUrl();
+		// }
 
 		$jsonLd['partOfSeries'] = array(
 			'@type' => 'PodcastSeries',
