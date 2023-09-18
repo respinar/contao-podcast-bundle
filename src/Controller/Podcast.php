@@ -343,14 +343,14 @@ class Podcast {
 		$hours = floor($seconds/3600);
 
 		if ($hours > 0 ) {
-			$result .= "$hours hr ";
+			$result .= "$hours ".$GLOBALS['TL_LANG']['MSC']['podcast_hr']." ";
 			$seconds %= 3600;
 		}
 
 		$mins = round($seconds/60);
 
 		if ($mins > 0) {
-			$result .= "$mins min";
+			$result .= "$mins ".$GLOBALS['TL_LANG']['MSC']['podcast_min'];
 		}
 
 		return $result;

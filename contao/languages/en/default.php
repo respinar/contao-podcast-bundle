@@ -37,7 +37,8 @@ $GLOBALS['TL_LANG']['FMD'][PodcastChannelController::TYPE] = ['Channel list', 'S
 $GLOBALS['TL_LANG']['MSC']['notExist'] = 'There is a problem!';
 $GLOBALS['TL_LANG']['MSC']['accessError'] = 'You do not have access to this channel!';
 $GLOBALS['TL_LANG']['MSC']['emptyChannel'] = 'There is no episode in this channel!';
-
+$GLOBALS['TL_LANG']['MSC']['podcast_hr'] = 'hr';
+$GLOBALS['TL_LANG']['MSC']['podcast_min'] = 'min';
 /**
  * Errors
  */
