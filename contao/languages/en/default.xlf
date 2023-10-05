@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.1">
+  <file datatype="php" original="vendor/respinar/contao-podcast/contao/languages/en/default.php" source-language="en">
+    <body>
+      <trans-unit id="MOD.podcasts.0">
+        <source>Podcasts</source>
+      </trans-unit>
+      <trans-unit id="MOD.podcasts.1">
+        <source>Manage Podcasts</source>
+      </trans-unit>
+      <trans-unit id="CTE.podcast.0">
+        <source>Podcast</source>
+      </trans-unit>
+      <trans-unit id="CTE.podcast.1">
+        <source>Add an Episode of podcast</source>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_modules">
+        <source>Podacsts</source>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_episode.0">
+        <source>Episode reader</source>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_episode.1">
+        <source>Show deatil of an Episode</source>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_channel.0">
+        <source>Channel list</source>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_channel.1">
+        <source>Show Episodes of a Channel</source>
+      </trans-unit>
+      <trans-unit id="MSC.notExist">
+        <source>There is a problem!</source>
+      </trans-unit>
+      <trans-unit id="MSC.accessError">
+        <source>You do not have access to this channel!</source>
+      </trans-unit>
+      <trans-unit id="MSC.emptyChannel">
+        <source>There is no episode in this channel!</source>
+      </trans-unit>
+      <trans-unit id="MSC.podcast_hr">
+        <source>hr</source>
+      </trans-unit>
+      <trans-unit id="MSC.podcast_min">
+        <source>min</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
