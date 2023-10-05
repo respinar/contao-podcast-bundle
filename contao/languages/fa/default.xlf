@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.1">
+  <file datatype="php" original="vendor/respinar/contao-podcast/contao/languages/en/default.php" source-language="en" target-language="fa">
+    <body>
+      <trans-unit id="MOD.podcasts.0">
+        <source>Podcasts</source>
+        <target>پادکست‌ها</target>
+      </trans-unit>
+      <trans-unit id="MOD.podcasts.1">
+        <source>Manage Podcasts</source>
+        <target>مدیریت پادکست‌ها</target>
+      </trans-unit>
+      <trans-unit id="CTE.podcast.0">
+        <source>Podcast</source>
+        <target>پادکست</target>
+      </trans-unit>
+      <trans-unit id="CTE.podcast.1">
+        <source>Add an Episode of podcast</source>
+        <target>افزودن یک اپیزود به پادکست</target>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_modules">
+        <source>Podacsts</source>
+        <target>پادکست‌ها</target>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_episode.0">
+        <source>Episode reader</source>
+        <target>اپیزود‌خوان</target>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_episode.1">
+        <source>Show deatil of an Episode</source>
+        <target>نمایش جزئیات یک اپیزود</target>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_channel.0">
+        <source>Channel list</source>
+        <target>لیست کانال</target>
+      </trans-unit>
+      <trans-unit id="FMD.podcast_channel.1">
+        <source>Show Episodes of a Channel</source>
+        <target>نمایش اپیزودهای یک کانال</target>
+      </trans-unit>
+      <trans-unit id="MSC.notExist">
+        <source>There is a problem!</source>
+        <target>مشکلی وجود دارد!</target>
+      </trans-unit>
+      <trans-unit id="MSC.accessError">
+        <source>You do not have access to this channel!</source>
+        <target>شما مجوز دسترسی به ایت کانال را ندارید!</target>
+      </trans-unit>
+      <trans-unit id="MSC.emptyChannel">
+        <source>There is no episode in this channel!</source>
+        <target>هیچ اپیزودی در این کانال وجود ندارد!</target>
+      </trans-unit>
+      <trans-unit id="MSC.podcast_hr">
+        <source>hr</source>
+        <target>ساعت</target>
+      </trans-unit>
+      <trans-unit id="MSC.podcast_min">
+        <source>min</source>
+        <target>دقیقه</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
