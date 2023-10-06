@@ -1,0 +1,30 @@
+[main]
+host = https://app.transifex.com
+
+[o:respinar:p:contao-podcast:r:default]
+file_filter            = contao/languages/<lang>/default.xlf
+source_file            = contao/languages/en/default.xlf
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = Default
+replace_edited_strings = false
+keep_translations      = false
+
+[o:respinar:p:contao-podcast:r:tl_podcast_channel]
+file_filter            = contao/languages/<lang>/tl_podcast_channel.xlf
+source_file            = contao/languages/en/tl_podcast_channel.xlf
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = tl_podcast_channel
+replace_edited_strings = false
+keep_translations      = false
+
+[o:respinar:p:contao-podcast:r:tl_podcast_episode]
+file_filter            = contao/languages/<lang>/tl_podcast_episode.xlf
+source_file            = contao/languages/en/tl_podcast_episode.xlf
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = tl_podcast_episode
+replace_edited_strings = false
+keep_translations      = false
+
