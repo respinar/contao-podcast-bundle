@@ -1,198 +1,159 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xliff version="1.1">
+<?xml version="1.0" ?><xliff version="1.1">
   <file datatype="php" original="vendor/respinar/contao-podcast/contao/languages/en/tl_podcast_episode.php" source-language="en" target-language="fa">
     <body>
       <trans-unit id="tl_podcast_episode.title_legend">
         <source>Episode settings</source>
-        <target></target>
+        <target>تنظیمات اپیزود</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.date_legend">
         <source>Date and author</source>
-        <target></target>
+        <target>تاریخ و نویسنده</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.podcast_legend">
         <source>Podcast</source>
-        <target></target>
+        <target>پادکست</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.image_legend">
         <source>Cover</source>
-        <target></target>
+        <target>کاور</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.meta_legend">
         <source>Metadata</source>
-        <target></target>
+        <target>متا داده</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.teaser_legend">
         <source>Subheadline and teaser</source>
-        <target></target>
+        <target>زیرعنوان و تیزر</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.expert_legend">
         <source>Expert settings</source>
-        <target></target>
+        <target>تنظیمات حرفه‌ای</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.publish_legend">
         <source>Publish settings</source>
-        <target></target>
+        <target>تنظیمات انتشار</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.new.0">
         <source>New Episode</source>
-        <target></target>
+        <target>اپیزود جدید</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.new.1">
         <source>Ein neues Element anlegen</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.edit">
         <source>Datensatz mit ID: %s bearbeiten</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.copy">
         <source>Datensatz mit ID: %s kopieren</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.delete">
         <source>Datensatz mit ID: %s löschen</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.show">
         <source>Datensatz mit ID: %s ansehen</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.title.0">
         <source>Title</source>
-        <target></target>
+        <target>عنوان</target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.title.1">
         <source>Please enter the episode title.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.alias.0">
         <source>Alias (guid)</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.alias.1">
         <source>The episode alias is a unique reference to the episode which can be called instead of its numeric ID.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.author.0">
         <source>Author</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.author.1">
         <source>Here you can change the author of the episode.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.featured.0">
         <source>Feature episode</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.featured.1">
         <source>Show the episode in a featured podcast list.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.date.0">
         <source>Publish date</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.date.1">
         <source>Please enter the date according to the global date format.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.episodeNumber.0">
         <source>Episode number</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.episodeNumber.1">
         <source>Please enter the episode number.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.podcastSRC.0">
         <source>Audio file</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.podcastSRC.1">
         <source>Please select a file or folder from the files directory.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.coverSRC.0">
         <source>Episode cover</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.coverSRC.1">
         <source>Please select a file or folder from the files directory.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.pageTitle.0">
         <source>Meta title</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.pageTitle.1">
         <source>Here you can add a custom meta title to overwrite the default page title.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.description.0">
         <source>Meta description</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.description.1">
         <source>Here you can add a custom meta description to overwrite the default page description.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.duration.0">
         <source>Duration (seconds)</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.duration.1">
         <source>Please enter the duration in seconds.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.subheadline.0">
         <source>Subheadline</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.subheadline.1">
         <source>Here you can enter a subheadline.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.teaser.0">
         <source>Episode teaser</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.teaser.1">
         <source>The episode teaser can be shown in a podcast list.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.cssClass.0">
         <source>CSS class</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.cssClass.1">
         <source>Here you can enter one or more classes.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.published.0">
         <source>Publish episode</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.published.1">
         <source>Make the episode publicly visible on the website.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.start.0">
         <source>Show from</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.start.1">
         <source>If you want to prevent the episode from showing on the website before a certain date/time, you can enter it here. Otherwise leave the field blank.</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.stop.0">
         <source>Show until</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="tl_podcast_episode.stop.1">
         <source>If you want to prevent the episode from showing on the website after a certain date/time, you can enter it here. Otherwise leave the field blank.</source>
-        <target></target>
       </trans-unit>
     </body>
   </file>
