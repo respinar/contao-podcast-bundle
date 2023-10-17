@@ -3,20 +3,20 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Contao Products Bundle.
+ * This file is part of Contao Podcast Bundle.
  *
  * (c) Hamid Peywasti 2023 <hamid@respinar.com>
  *
  * @license MIT
  */
 
-namespace Respinar\ProductsBundle\EventListener;
+namespace Respinar\PodcastBundle\EventListener;
 
 use Contao\CoreBundle\Event\PreviewUrlCreateEvent;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
-use Respinar\ProductsBundle\Model\ProductModel;
+use Respinar\PodcastBundle\Model\EpisodeModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -35,7 +35,7 @@ class PreviewUrlCreateListener
     public function __invoke(PreviewUrlCreateEvent $event): void
     {
         // Do something
-        if (!$this->framework->isInitialized() || 'products' !== $event->getKey()) {
+        if (!$this->framework->isInitialized() || 'podcasts' !== $event->getKey()) {
             return;
         }
 
@@ -46,15 +46,15 @@ class PreviewUrlCreateListener
         }
 
         // Return on the product category list page
-        if ('tl_product' === $request->query->get('table') && !$request->query->has('act')) {
+        if ('tl_podcast_episode' === $request->query->get('table') && !$request->query->has('act')) {
             return;
         }
 
-        if ((!$id = $this->getId($event, $request)) || (!$productModel = $this->getProductModel($id))) {
+        if ((!$id = $this->getId($event, $request)) || (!$podcastModel = $this->getPodcastModel($id))) {
             return;
         }
 
-        $event->setQuery('product='.$productModel->id);
+        $event->setQuery('podcast='.$podcastModel->id);
     }
 
     /**
@@ -62,8 +62,8 @@ class PreviewUrlCreateListener
      */
     private function getId(PreviewUrlCreateEvent $event, Request $request)
     {
-        // Overwrite the ID if the news settings are edited
-        if ('tl_product' === $request->query->get('table') && 'edit' === $request->query->get('act')) {
+        // Overwrite the ID if the podcast settings are edited
+        if ('tl_podcast_episode' === $request->query->get('table') && 'edit' === $request->query->get('act')) {
             return $request->query->get('id');
         }
 
@@ -73,8 +73,8 @@ class PreviewUrlCreateListener
     /**
      * @param int|string $id
      */
-    private function getProductModel($id): ?ProductModel
+    private function getPodcastModel($id): ?EpisodeModel
     {
-        return $this->framework->getAdapter(ProductModel::class)->findByPk($id);
+        return $this->framework->getAdapter(EpisodeModel::class)->findByPk($id);
     }
 }
