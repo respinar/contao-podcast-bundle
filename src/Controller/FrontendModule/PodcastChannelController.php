@@ -23,7 +23,7 @@ use Contao\Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Respinar\PodcastBundle\Controller\Podcast;
+use Respinar\PodcastBundle\Podcast;
 
 use Respinar\PodcastBundle\Model\EpisodeModel;
 use Respinar\PodcastBundle\Model\ChannelModel;
