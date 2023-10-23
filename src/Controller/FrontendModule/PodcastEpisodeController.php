@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 
-use Respinar\PodcastBundle\Controller\Podcast;
+use Respinar\PodcastBundle\Podcast;
 
 use Respinar\PodcastBundle\Model\EpisodeModel;
 use Respinar\PodcastBundle\Model\ChannelModel;
