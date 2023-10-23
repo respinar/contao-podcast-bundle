@@ -11,5 +11,5 @@ services:
 
     Respinar\PodcastBundle\:
         resource: ../src/
-        exclude: ../src/{DependencyInjection,Model,Session}
+        exclude: ../src/DependencyInjection
 
