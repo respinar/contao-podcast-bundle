@@ -25,7 +25,7 @@ use Respinar\PodcastBundle\Podcast;
 use Respinar\PodcastBundle\Model\EpisodeModel;
 use Respinar\PodcastBundle\Model\ChannelModel;
 
-#[AsContentElement(category: "media")]
+#[AsContentElement(category: 'media', template: 'ce_podcast')]
 class PodcastController extends AbstractContentElementController
 {
 
