@@ -11,7 +11,6 @@ declare(strict_types=1);
  */
 
 use Contao\Controller;
-
 use Respinar\PodcastBundle\Controller\ContentElement\PodcastController;
 
 /**
@@ -27,33 +26,29 @@ $GLOBALS['TL_DCA']['tl_content']['palettes'][PodcastController::TYPE] = '
     {invisible_legend:hide},invisible,start,stop';
 
 // Add fields to tl_content
-$GLOBALS['TL_DCA']['tl_content']['fields']['podcast_episode'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'select',
-    'foreignKey'              => 'tl_podcast_episode.title',
-	'eval'                    => array('multiple'=>false, 'foreignTable' => 'tl_podcast_episode', 'chosen' => true, 'mandatory'=>true, 'tl_class'=>'w50'),
-	'sql'                     => "blob NULL"
-);
+$GLOBALS['TL_DCA']['tl_content']['fields']['podcast_episode'] = [
+	'exclude' => true,
+	'inputType' => 'select',
+    'foreignKey' => 'tl_podcast_episode.title',
+	'eval' => ['multiple' => false, 'foreignTable' => 'tl_podcast_episode', 'chosen' => true, 'mandatory' => true, 'tl_class' => 'w50'],
+	'sql' => "blob NULL"
+];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['podcast_metaFields'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'options'                 => array('date', 'author', 'comments'),
-	'reference'               => &$GLOBALS['TL_LANG']['MSC'],
-	'eval'                    => array('multiple'=>true),
-	'sql'                     => "varchar(255) COLLATE ascii_bin NOT NULL default 'a:2:{i:0;s:4:\"date\";i:1;s:6:\"author\";}'"
-);
+$GLOBALS['TL_DCA']['tl_content']['fields']['podcast_metaFields'] = [
+	'exclude' => true,
+	'inputType' => 'checkbox',
+	'options' => ['date', 'author', 'comments'],
+	'reference' => &$GLOBALS['TL_LANG']['MSC'],
+	'eval' => ['multiple' => true],
+	'sql' => "varchar(255) COLLATE ascii_bin NOT NULL default 'a:2:{i:0;s:4:\"date\";i:1;s:6:\"author\";}'"
+];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['podcast_template'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'select',
-	'options_callback' => static function ()
-	{
+$GLOBALS['TL_DCA']['tl_content']['fields']['podcast_template'] = [
+	'exclude' => true,
+	'inputType' => 'select',
+	'options_callback' => static function () {
 		return Controller::getTemplateGroup('podcast_');
 	},
-	'eval'                    => array('includeBlankOption'=>true, 'chosen'=>true, 'tl_class'=>'w50'),
-	'sql'                     => "varchar(64) COLLATE ascii_bin NOT NULL default ''"
-);
+	'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
+	'sql' => "varchar(64) COLLATE ascii_bin NOT NULL default ''"
+];
