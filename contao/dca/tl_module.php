@@ -11,7 +11,6 @@ declare(strict_types=1);
  */
 
 use Contao\Controller;
-
 use Respinar\PodcastBundle\Controller\FrontendModule\PodcastChannelController;
 use Respinar\PodcastBundle\Controller\FrontendModule\PodcastEpisodeController;
 
@@ -36,69 +35,62 @@ $GLOBALS['TL_DCA']['tl_module']['palettes'][PodcastEpisodeController::TYPE] = '
 
 
 // Add fields to tl_module
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channel'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'radio',
-    'foreignKey'              => 'tl_podcast_channel.title',
-	'eval'                    => array('multiple'=>false, 'foreignTable' => 'tl_podcast_channel', 'mandatory'=>true),
-	'sql'                     => "int(10) unsigned NULL"
-);
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channels'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-    'foreignKey'              => 'tl_podcast_channel.title',
-	'eval'                    => array('multiple'=>true, 'foreignTable' => 'tl_podcast_channel', 'mandatory'=>true),
-	'sql'                     => "blob NULL"
-);
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channel'] = [
+	'exclude' => true,
+	'inputType' => 'radio',
+    'foreignKey' => 'tl_podcast_channel.title',
+	'eval' => ['multiple'=>false, 'foreignTable' => 'tl_podcast_channel', 'mandatory' => true],
+	'sql' => "int(10) unsigned NULL"
+];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_featured'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'select',
-	'options'                 => array('all_items', 'featured', 'unfeatured', 'featured_first'),
-	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-	'eval'                    => array('tl_class'=>'w50 clr'),
-	'sql'                     => "varchar(16) COLLATE ascii_bin NOT NULL default 'all_items'"
-);
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_channels'] = [
+	'exclude' => true,
+	'inputType' => 'checkbox',
+    'foreignKey' => 'tl_podcast_channel.title',
+	'eval' => ['multiple' => true, 'foreignTable' => 'tl_podcast_channel', 'mandatory' => true],
+	'sql' => "blob NULL"
+];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_metaFields'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'options'                 => array('date', 'author', 'comments'),
-	'reference'               => &$GLOBALS['TL_LANG']['MSC'],
-	'eval'                    => array('multiple'=>true),
-	'sql'                     => "varchar(255) COLLATE ascii_bin NOT NULL default 'a:2:{i:0;s:4:\"date\";i:1;s:6:\"author\";}'"
-);
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_featured'] = [
+	'exclude' => true,
+	'inputType' => 'select',
+	'options' => ['all_items', 'featured', 'unfeatured', 'featured_first'],
+	'reference' => &$GLOBALS['TL_LANG']['tl_module'],
+	'eval' => ['tl_class' => 'w50 clr'],
+	'sql' => "varchar(16) COLLATE ascii_bin NOT NULL default 'all_items'"
+];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_template'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'select',
-	'options_callback' => static function ()
-	{
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_metaFields'] = [
+	'exclude' => true,
+	'inputType' => 'checkbox',
+	'options' => ['date', 'author', 'comments'],
+	'reference' => &$GLOBALS['TL_LANG']['MSC'],
+	'eval' => ['multiple' => true],
+	'sql' => "varchar(255) COLLATE ascii_bin NOT NULL default 'a:2:{i:0;s:4:\"date\";i:1;s:6:\"author\";}'"
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_template'] = [
+	'exclude' => true,
+	'inputType' => 'select',
+	'options_callback' => static function () {
 		return Controller::getTemplateGroup('podcast_');
 	},
-	'eval'                    => array('includeBlankOption'=>true, 'chosen'=>true, 'tl_class'=>'w50'),
-	'sql'                     => "varchar(64) COLLATE ascii_bin NOT NULL default ''"
-);
+	'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
+	'sql' => "varchar(64) COLLATE ascii_bin NOT NULL default ''"
+];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_listClass'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'text',
-	'eval'                    => array('maxlength'=>128, 'tl_class'=>'w50'),
-	'sql'                     => "varchar(255) NOT NULL default ''"
-);
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_listClass'] = [
+	'exclude' => true,
+	'inputType' => 'text',
+	'eval' => ['maxlength'=>128, 'tl_class' => 'w50'],
+	'sql' => "varchar(255) NOT NULL default ''"
+];
 
-$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_sortBy'] = array
-(
-	'exclude'                 => true,
-	'inputType'               => 'select',
-    'options'                 => array('number_asc','number_desc','date_asc', 'date_desc'),
-	'reference'               => &$GLOBALS['TL_LANG']['tl_module'],
-	'eval'                    => array('tl_class'=>'w50'),
-	'sql'                     => "varchar(32) COLLATE ascii_bin NOT NULL default 'number_desc'"
-);
+$GLOBALS['TL_DCA']['tl_module']['fields']['podcast_sortBy'] = [
+	'exclude' => true,
+	'inputType' => 'select',
+    'options' => ['number_asc','number_desc','date_asc', 'date_desc'],
+	'reference' => &$GLOBALS['TL_LANG']['tl_module'],
+	'eval' => ['tl_class' => 'w50'],
+	'sql' => "varchar(32) COLLATE ascii_bin NOT NULL default 'number_desc'"
+];
