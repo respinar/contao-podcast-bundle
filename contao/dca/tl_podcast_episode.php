@@ -20,6 +20,8 @@ use Contao\System;
 
 use Respinar\PodcastBundle\Model\ChannelModel;
 
+System::loadLanguageFile('tl_content');
+
 /**
  * Table tl_podcast_episode
  */
