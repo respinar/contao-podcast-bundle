@@ -44,14 +44,9 @@ class EpisodeModel extends Model
 	}
 
 	/**
-	 * Find published episodes with the default redirect target by their parent ID
-	 *
-	 * @param integer $intPid     The podcast channel ID
-	 * @param array   $arrOptions An optional options array
-	 *
-	 * @return Collection<EpisodeModel>|EpisodeModel[]|null A collection of models or null if there are no episode
+	 * Find published episodes with the default redirect target by their parent ID	 
 	 */
-	public static function findPublishedDefaultByPid($intPid, array $arrOptions=array())
+	public static function findPublishedDefaultByPid(int $intPid, array $arrOptions=array()): Collection|EpisodeModel|null
 	{
 		$t = static::$strTable;
 		$arrColumns = array("$t.pid=?");
