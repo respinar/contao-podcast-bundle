@@ -274,7 +274,7 @@ class Podcast {
 	 *
 	 * @return boolean
 	 */
-	public static function isProtected($channel)
+	public static function isProtected(int $channel): bool
 	{
 		if (!isset($channel))
 		{
