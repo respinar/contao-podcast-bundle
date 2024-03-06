@@ -98,16 +98,8 @@ class EpisodeModel extends Model
 
 	/**
 	 * Find published product items by their parent ID
-	 *
-	 * @param array   $arrPids     An array of product catalogs IDs
-	 * @param boolean $blnFeatured If true, return only featured product, if false, return only unfeatured product
-	 * @param integer $intLimit    An optional limit
-	 * @param integer $intOffset   An optional offset
-	 * @param array   $arrOptions  An optional options array
-	 *
-	 * @return \Model\Collection|null A collection of models or null if there are no product
 	 */
-	public static function findPublishedByPid($pid, $blnFeatured=null, $intLimit=0, $intOffset=0, array $arrOptions=array())
+	public static function findPublishedByPid(int $pid, bool $blnFeatured=null, int $intLimit=0, int $intOffset=0, array $arrOptions=array()): Collection|EpisodeModel|null
 	{
 		if (empty($pid))
 		{
