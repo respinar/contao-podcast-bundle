@@ -37,7 +37,7 @@ class Podcast {
 	 */
 	private static $arrUrlCache = array();
 
-    static public function parseEpisode (EpisodeModel $objEpisode, $model, $page, $blnAddArchive=false) {
+    static public function parseEpisode (EpisodeModel $objEpisode, ModuleModel|ContentModel $model, PageModel $page, bool $blnAddArchive=false) {
 
 		global $objPage;
 
