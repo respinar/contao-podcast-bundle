@@ -14,6 +14,7 @@ namespace Respinar\PodcastBundle\Model;
 
 use Contao\Date;
 use Contao\Model;
+use Contao\Model\Collection;
 
 class EpisodeModel extends Model
 {
