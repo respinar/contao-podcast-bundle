@@ -24,6 +24,8 @@ use Contao\UserModel;
 use Contao\CoreBundle\Util\LocaleUtil;
 use Contao\Date;
 use Contao\File;
+use Contao\Model\Collection;
+use Contao\ModuleModel;
 use Respinar\PodcastBundle\Model\ChannelModel;
 use Respinar\PodcastBundle\Model\EpisodeModel;
 
