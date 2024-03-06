@@ -144,7 +144,7 @@ class Podcast {
     }
 
 
-    static public function generateEpisodeUrl ($objItem, $blnAddArchive=false, $blnAbsolute=false) {
+    static public function generateEpisodeUrl (EpisodeModel $objItem, bool $blnAddArchive=false, bool $blnAbsolute=false) {
         $strCacheKey = 'id_' . $objItem->id . ($blnAbsolute ? '_absolute' : '');
 
 		// Load the URL from cache
