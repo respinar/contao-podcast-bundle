@@ -67,14 +67,8 @@ class EpisodeModel extends Model
 
 	/**
 	 * Count published product items by their parent ID
-	 *
-	 * @param array   $arrPids     An array of product catalogs IDs
-	 * @param boolean $blnFeatured If true, return only featured product, if false, return only unfeatured product
-	 * @param array   $arrOptions  An optional options array
-	 *
-	 * @return integer The number of product items
 	 */
-	public static function countPublishedByPid($pid, $blnFeatured=null, array $arrOptions=array())
+	public static function countPublishedByPid(int $pid, bool $blnFeatured=null, array $arrOptions=array()): int
 	{
 		if (empty($pid))
 		{
