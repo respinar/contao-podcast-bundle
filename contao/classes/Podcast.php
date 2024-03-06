@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Respinar\PodcastBundle;
 
+use Contao\ContentModel;
 use Contao\System;
 use Contao\FrontendTemplate;
 use Contao\PageModel;
