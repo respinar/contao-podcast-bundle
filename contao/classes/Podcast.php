@@ -305,7 +305,7 @@ class Podcast {
 	 *
 	 * @return string
 	 */
-	public static function iso8601_duration($seconds)
+	public static function iso8601_duration(int $seconds): string
 	{
 		$intervals = array('H' => 3600, 'M' => 60, 'S' => 1);
 
