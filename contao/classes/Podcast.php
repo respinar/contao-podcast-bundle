@@ -335,7 +335,7 @@ class Podcast {
 	 *
 	 * @return string
 	 */
-	public static function getDuration($seconds)
+	public static function getDuration(int $seconds): string
 	{
 		$result = "";
 
