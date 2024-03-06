@@ -183,7 +183,7 @@ class Podcast {
 	 *
 	 * @return array
 	 */
-	public static function getSchemaOrgData(EpisodeModel $objEpisode, $model): array
+	public static function getSchemaOrgData(EpisodeModel $objEpisode, ModuleModel|ContentModel $model): array
 	{
 		$htmlDecoder = System::getContainer()->get('contao.string.html_decoder');
 
