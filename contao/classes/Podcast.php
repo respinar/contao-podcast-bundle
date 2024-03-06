@@ -133,7 +133,7 @@ class Podcast {
     }
 
 
-    static public function parseEpisodes ($objEpisodes, $model, $page, $blnAddArchive=false) {
+    static public function parseEpisodes (Collection $objEpisodes, ModuleModel|ContentModel $model, PageModel $page, $blnAddArchive=false) {
 
         $arrEpisodes = array();
 
