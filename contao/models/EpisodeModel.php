@@ -22,14 +22,8 @@ class EpisodeModel extends Model
 
 	/**
 	 * Find a published episode from one or more podcast channel by its ID or alias
-	 *
-	 * @param mixed $varId      The numeric ID or alias name
-	 * @param array $arrPids    An array of parent IDs
-	 * @param array $arrOptions An optional options array
-	 *
-	 * @return EpisodeModel|null The model or null if there are no episode
 	 */
-	public static function findPublishedByParentAndIdOrAlias($varId, $arrPids, array $arrOptions=array())
+	public static function findPublishedByParentAndIdOrAlias(mixed $varId, array $arrPids, array $arrOptions=array()): EpisodeModel|null
 	{
 		if (empty($arrPids) || !\is_array($arrPids))
 		{
