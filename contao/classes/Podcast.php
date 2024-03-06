@@ -239,7 +239,7 @@ class Podcast {
 	 *
 	 * @return array
 	 */
-	public static function sortOutProtected($arrChannels)
+	public static function sortOutProtected(array $arrChannels): array
 	{
 		if (empty($arrChannels) || !\is_array($arrChannels))
 		{
