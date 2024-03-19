@@ -41,10 +41,10 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
         $page = $this->getPageModel();
 
         // Set the item from the auto_item parameter
-		if (!isset($_GET['items']) && $GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
-		{
-			Input::setGet('items', Input::get('auto_item'));
-		}
+		// if (!isset($_GET['items']) && $GLOBALS['TL_CONFIG']['useAutoItem'] && isset($_GET['auto_item']))
+		// {
+		// 	Input::setGet('items', Input::get('auto_item'));
+		// }
 
 		//$objProduct = ProductModel::findOneByAlias(Input::get('items'));
 		$model->podcast_channels = StringUtil::deserialize($model->podcast_channels);
