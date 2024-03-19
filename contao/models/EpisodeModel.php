@@ -23,7 +23,7 @@ class EpisodeModel extends Model
 	/**
 	 * Find a published episode from one or more podcast channel by its ID or alias
 	 */
-	public static function findPublishedByParentAndIdOrAlias(mixed $varId, array $arrPids, array $arrOptions=array()): EpisodeModel|null
+	public static function findPublishedByParentAndIdOrAlias($varId, $arrPids, array $arrOptions=array()): EpisodeModel|null
 	{
 		if (empty($arrPids) || !\is_array($arrPids))
 		{
@@ -87,7 +87,7 @@ class EpisodeModel extends Model
 			$arrColumns[] = "$t.featured=''";
 		}
 
-		if (!BE_USER_LOGGED_IN)
+		if (!static::isPreviewMode($arrOptions))
 		{
 			$time = time();
 			$arrColumns[] = "($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time) AND $t.published=1";
@@ -99,7 +99,7 @@ class EpisodeModel extends Model
 	/**
 	 * Find published product items by their parent ID
 	 */
-	public static function findPublishedByPid(int $pid, bool $blnFeatured=null, int $intLimit=0, int $intOffset=0, array $arrOptions=array()): Collection|EpisodeModel|null
+	public static function findPublishedByPid(int $pid, $blnFeatured=null, int $intLimit=0, int $intOffset=0, array $arrOptions=array()): Collection|EpisodeModel|null
 	{
 		if (empty($pid))
 		{
@@ -119,7 +119,7 @@ class EpisodeModel extends Model
 		}
 
 		// Never return unpublished elements in the back end, so they don't end up in the RSS feed
-		if (!BE_USER_LOGGED_IN || TL_MODE == 'BE')
+		if (!static::isPreviewMode($arrOptions))
 		{
 			$time = time();
 			$arrColumns[] = "($t.start='' OR $t.start<$time) AND ($t.stop='' OR $t.stop>$time) AND $t.published=1";
