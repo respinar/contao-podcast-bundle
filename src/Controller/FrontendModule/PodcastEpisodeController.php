@@ -48,7 +48,7 @@ class PodcastEpisodeController extends AbstractFrontendModuleController
 
 		//$objProduct = ProductModel::findOneByAlias(Input::get('items'));
 		$model->podcast_channels = StringUtil::deserialize($model->podcast_channels);
-        $objEpisode = EpisodeModel::findPublishedByParentAndIdOrAlias(Input::get('items'), $model->podcast_channels);
+        $objEpisode = EpisodeModel::findPublishedByParentAndIdOrAlias(Input::get('auto_item'), $model->podcast_channels);
 
         # Throw 404 error if episode not founded.
         if (null === $objEpisode)
