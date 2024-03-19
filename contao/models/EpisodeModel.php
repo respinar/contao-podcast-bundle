@@ -31,7 +31,7 @@ class EpisodeModel extends Model
 		}
 
 		$t = static::$strTable;
-		$arrColumns = !preg_match('/^[1-9]\d*$/', $varId) ? array("BINARY $t.alias=?") : array("$t.id=?");
+		$arrColumns = !preg_match('/^[1-9]\d*$/', $varId) ? array("CAST($t.alias AS BINARY)=?") : array("$t.id=?");
 		$arrColumns[] = "$t.pid IN(" . implode(',', array_map('\intval', $arrPids)) . ")";
 
 		if (!static::isPreviewMode($arrOptions))
