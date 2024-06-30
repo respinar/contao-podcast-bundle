@@ -1,5 +1,5 @@
 {
-    "name": "respinar/contao-podcast",
+    "name": "respinar/contao-podcast-bundle",
     "description": "Contao Podcast Bundle",
     "keywords": ["contao", "bundle", "podcast"],
     "type": "contao-bundle",
