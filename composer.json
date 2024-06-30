@@ -1,20 +1,20 @@
 {
-    "name": "respinar/contao-podcast-bundle",
+    "name": "respinar/contao-podcast",
     "description": "Contao Podcast Bundle",
     "keywords": ["contao", "bundle", "podcast"],
     "type": "contao-bundle",
     "license": "MIT",
     "authors": [
         {
-            "name": "Hamid Abbaszadeh",
-            "email": "abbaszadeh.h@gmail.com",
+            "name": "Hamid Peywasti",
+            "email": "hamid@respinar.com",
             "homepage": "https://respinar.com/",
             "role": "Developer"
         }
     ],
     "support": {
-        "issues": "https://github.com/respinar/contao-podcast-bundle/issues",
-        "source": "https://github.com/respinar/contao-podcast-bundle"
+        "issues": "https://github.com/respinar/contao-podcast/issues",
+        "source": "https://github.com/respinar/contao-podcast"
     },
     "require": {
         "php": "^8.1",
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Respinar\\PodcastBundle\\": "src/"
+            "Respinar\\ContaoPodcastBundle\\": "src/"
         },
         "classmap": [
             "contao/"
