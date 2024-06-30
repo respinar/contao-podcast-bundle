@@ -1,20 +1,20 @@
 {
-    "name": "respinar/contao-podcast",
+    "name": "respinar/contao-podcast-bundle",
     "description": "Contao Podcast Bundle",
     "keywords": ["contao", "bundle", "podcast"],
     "type": "contao-bundle",
     "license": "MIT",
     "authors": [
         {
-            "name": "Hamid Peywasti",
-            "email": "hamid@respinar.com",
+            "name": "Hamid Abbaszadeh",
+            "email": "abbaszadeh.h@gmail.com",
             "homepage": "https://respinar.com/",
             "role": "Developer"
         }
     ],
     "support": {
-        "issues": "https://github.com/respinar/contao-podcast/issues",
-        "source": "https://github.com/respinar/contao-podcast"
+        "issues": "https://github.com/respinar/contao-podcast-bundle/issues",
+        "source": "https://github.com/respinar/contao-podcast-bundle"
     },
     "require": {
         "php": "^8.1",
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Respinar\\ContaoPodcastBundle\\": "src/"
+            "Respinar\\PodcastBundle\\": "src/"
         },
         "classmap": [
             "contao/"
@@ -45,7 +45,7 @@
         }
     },
     "extra": {
-        "contao-manager-plugin": "Respinar\\PodcastBundle\\ContaoManager\\Plugin"
+        "contao-manager-plugin": "Respinar\\ContaoPodcastBundle\\ContaoManager\\Plugin"
     },
     "scripts": {
         "cs-fixer": "@php tools/ecs/vendor/bin/ecs check config/ contao/ src/ templates/ tests/ --config tools/ecs/config.php --fix --ansi",
