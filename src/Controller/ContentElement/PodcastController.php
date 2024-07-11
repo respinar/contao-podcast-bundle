@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace Respinar\PodcastBundle\Controller\ContentElement;
+namespace Respinar\ContaoPodcastBundle\Controller\ContentElement;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
@@ -20,10 +20,10 @@ use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Respinar\PodcastBundle\Podcast;
+use Respinar\ContaoPodcastBundle\Podcast;
 
-use Respinar\PodcastBundle\Model\EpisodeModel;
-use Respinar\PodcastBundle\Model\ChannelModel;
+use Respinar\ContaoPodcastBundle\Model\EpisodeModel;
+use Respinar\ContaoPodcastBundle\Model\ChannelModel;
 
 #[AsContentElement(category: 'media', template: 'ce_podcast')]
 class PodcastController extends AbstractContentElementController
