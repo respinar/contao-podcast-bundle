@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace Respinar\PodcastBundle\Controller\FrontendModule;
+namespace Respinar\ContaoPodcastBundle\Controller\FrontendModule;
 
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
@@ -26,10 +26,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 
-use Respinar\PodcastBundle\Podcast;
+use Respinar\ContaoPodcastBundle\Podcast;
 
-use Respinar\PodcastBundle\Model\EpisodeModel;
-use Respinar\PodcastBundle\Model\ChannelModel;
+use Respinar\ContaoPodcastBundle\Model\EpisodeModel;
+use Respinar\ContaoPodcastBundle\Model\ChannelModel;
 
 #[AsFrontendModule(category: 'podcasts', template: 'mod_podcast_episode')]
 class PodcastEpisodeController extends AbstractFrontendModuleController
