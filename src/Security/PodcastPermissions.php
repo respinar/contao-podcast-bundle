@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace Respinar\PodcastBundle\Security;
+namespace Respinar\ContaoPodcastBundle\Security;
 
 final class PodcastPermissions
 {
