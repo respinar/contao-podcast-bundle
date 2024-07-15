@@ -10,13 +10,13 @@ declare(strict_types=1);
  * @license MIT
  */
 
-namespace Respinar\PodcastBundle\EventListener;
+namespace Respinar\ContaoPodcastBundle\EventListener;
 
 use Contao\CoreBundle\Event\PreviewUrlCreateEvent;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 use Contao\CoreBundle\Framework\ContaoFramework;
-use Respinar\PodcastBundle\Model\EpisodeModel;
+use Respinar\ContaoPodcastBundle\Model\EpisodeModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
