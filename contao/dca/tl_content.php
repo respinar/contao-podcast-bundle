@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Contao\Controller;
-use Respinar\PodcastBundle\Controller\ContentElement\PodcastController;
+use Respinar\ContaoPodcastBundle\Controller\ContentElement\PodcastController;
 
 /**
  * Content elements
